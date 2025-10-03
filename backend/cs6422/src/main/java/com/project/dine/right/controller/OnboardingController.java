@@ -1,6 +1,10 @@
 package com.project.dine.right.controller;
 
 import com.project.dine.right.dto.OnboardingUserLoginRequestDTO;
+import com.project.dine.right.dto.OnboardingUserLoginResponseDTO;
+import com.project.dine.right.dto.OnboardingUserSignupRequestDTO;
+import com.project.dine.right.dto.OnboardingUserSignupResponseDTO;
+import com.project.dine.right.enums.CustomErrorCodes;
 import com.project.dine.right.interfaces.IOnboardingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +22,14 @@ public class OnboardingController {
     IOnboardingService onboardingService;
 
     @RequestMapping("/login")
-    public ResponseEntity userLogin(@RequestBody OnboardingUserLoginRequestDTO onboardingUserLoginRequestDTO) {
+    public ResponseEntity<OnboardingUserLoginResponseDTO> userLogin(@RequestBody OnboardingUserLoginRequestDTO onboardingUserLoginRequestDTO) {
+
+        var responseDTO = new OnboardingUserLoginResponseDTO();
 
         //Early detection on existence of request body
         if (ObjectUtils.isEmpty(onboardingUserLoginRequestDTO)) {
-            return ResponseEntity.badRequest().build();
+            responseDTO.setCode(CustomErrorCodes.EMPTY_JSON.name());
+            return ResponseEntity.badRequest().body(responseDTO);
         }
 
         var email = onboardingUserLoginRequestDTO.getEmail();
@@ -30,15 +37,47 @@ public class OnboardingController {
 
         //Early detection on existence of either email or password strings
         if (!StringUtils.hasLength(email) || !StringUtils.hasLength(password)) {
-            return ResponseEntity.badRequest().build();
+            responseDTO.setCode(CustomErrorCodes.MISSING_REQUIRED_PARAMETER.name());
+            return ResponseEntity.badRequest().body(responseDTO);
         }
 
         //Service function to check if user exists
-        if (onboardingService.userLogin(email, password)) {
-            return ResponseEntity.ok().build();
+        var userData = onboardingService.userLogin(email, password);
+        if (!ObjectUtils.isEmpty(userData)) {
+
+            responseDTO.setId(userData.getUserId());
+            responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
+
+            return ResponseEntity.ok(responseDTO);
         }
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED.value()).build();
+        responseDTO.setCode(CustomErrorCodes.UNAUTHORIZED.name());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseDTO);
+    }
+
+    @RequestMapping("/signup")
+    public ResponseEntity<OnboardingUserSignupResponseDTO> userSignup(@RequestBody OnboardingUserSignupRequestDTO onboardingUserSignupRequestDTO) {
+
+        var responseDTO = new OnboardingUserSignupResponseDTO();
+
+        //Early detection on existence of request body
+        if (ObjectUtils.isEmpty(onboardingUserSignupRequestDTO)) {
+            responseDTO.setCode(CustomErrorCodes.EMPTY_JSON.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        var name = onboardingUserSignupRequestDTO.getName();
+        var email = onboardingUserSignupRequestDTO.getEmail();
+        var password = onboardingUserSignupRequestDTO.getPassword();
+
+        //Early detection on existence of either email or password strings
+        if (!StringUtils.hasLength(email) || !StringUtils.hasLength(password) || !StringUtils.hasLength(name)) {
+            responseDTO.setCode(CustomErrorCodes.MISSING_REQUIRED_PARAMETER.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        responseDTO.setCode(CustomErrorCodes.GENERIC_ERROR.name());
+        return ResponseEntity.badRequest().body(responseDTO);
     }
 
 }
