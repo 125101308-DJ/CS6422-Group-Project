@@ -13,17 +13,15 @@
 - [Key Features](#key-features)
 - [How It Works](#how-it-works)
 - [Technology Stack](#technology-stack)
-- [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
 - [Team](#team)
-- [Contributing](#contributing)
-- [License](#license)
+
 
 ---
 
 ## About the Project
 
-**Dine Right** is an intelligent web-based restaurant recommendation system designed specifically for food lovers in Cork, Ireland. Whether you're a local looking for a new dining experience or a visitor exploring Cork's culinary scene, Dine Right helps you find the perfect restaurant that matches your unique preferences.
+**Dine Right** is an intelligent web-based restaurant recommendation system designed specifically for food lovers in Cork, Ireland. Whether you're a local looking for a new dining experience or a visitor exploring Irish's culinary scene, Dine Right helps you find the perfect restaurant that matches your unique preferences.
 
 Built as part of the **CS6422 Group Project** by **Group Ingenious**, this platform combines the power of collaborative and content-based filtering to deliver personalized dining recommendations that truly understand what you're looking for.
 
@@ -45,7 +43,7 @@ Dine Right learns your preferences during signup and continuously improves recom
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 ### Cuisine-Based Discovery
 Browse restaurants by your favorite cuisines — Italian, Indian, Chinese, Mexican, Irish, and more. Our system understands nuanced preferences like "authentic Thai" vs. "fusion Asian."
@@ -67,7 +65,7 @@ Stuck deciding where to eat? Chat with our intelligent assistant to get instant 
 
 ---
 
-## 🔬 How It Works
+## How It Works
 
 ### Recommendation Engine
 
@@ -96,7 +94,7 @@ User Preferences → Feature Engineering → ML Model → Personalized Rankings 
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Frontend
 - **React.js** - Modern, responsive user interface
@@ -133,15 +131,15 @@ User Preferences → Feature Engineering → ML Model → Personalized Rankings 
  In-Progress
 ---
 
-## 👥 Team
+## Team
 
 **Group Ingenious** - CS6422 Group Project
 
 | Role | Name | Responsibilities |
 |------|------|-----------------|
-| **AI Engineer** | Vishvasundar | Data collection, ML model development, recommendation engine |
 | **Backend Developer** | Derick | API development, database design, authentication |
 | **Frontend Developer** | Ashfaq | UI/UX design, React components, user interface |
+| **AI Engineer** | Vishvasundar | Data collection, ML model development, recommendation engine |
 | **Data Engineer/Tester** | Deepak | Integration, deployment, testing |
 | **Product Owner / ML Engineer** | Harini Sri | Coordination, documentation, timeline management, Building Chatbot|
 
