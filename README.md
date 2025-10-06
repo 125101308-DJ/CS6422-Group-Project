@@ -1,4 +1,4 @@
-# 🍽️ Dine Right
+# Dine Right
 
 **Smart Restaurant Recommendations for Ireland**
 
