@@ -7,4 +7,7 @@ public class OnboardingUserSignupResponseDTO {
     @Setter
     private String code;
 
+    @Setter
+    private Long id;
+
 }
