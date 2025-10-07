@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ public class OnboardingController {
     @Autowired
     IOnboardingService onboardingService;
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public ResponseEntity<OnboardingUserLoginResponseDTO> userLogin(@RequestBody OnboardingUserLoginRequestDTO onboardingUserLoginRequestDTO) {
 
         var responseDTO = new OnboardingUserLoginResponseDTO();
