@@ -140,7 +140,7 @@ User Preferences → Feature Engineering → ML Model → Personalized Rankings 
 | **Backend Developer** | Derick | API development, database design, authentication |
 | **Frontend Developer** | Ashfaq | UI/UX design, React components, user interface |
 | **AI Engineer** | Vishvasundar | Data collection, ML model development, recommendation engine |
-| **Data Engineer/Tester** | Deepak | Schema Design, Integration, Deployment, Testing, CI/CD Automation, Containerization |
+| **Data Engineer/Tester** | Deepak | Data Collection, Schema Design, Integration, Deployment, Testing, Containerization |
 | **Product Owner / ML Engineer** | Harini Sri | Coordination, documentation, timeline management, Building Chatbot|
 
 ---
