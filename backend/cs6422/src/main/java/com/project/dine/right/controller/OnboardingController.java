@@ -12,8 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -49,14 +49,14 @@ public class OnboardingController {
             responseDTO.setId(userData.getUserId());
             responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
 
-            return ResponseEntity.ok(responseDTO);
+            return ResponseEntity.ok().body(responseDTO);
         }
 
         responseDTO.setCode(CustomErrorCodes.UNAUTHORIZED.name());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseDTO);
     }
 
-    @RequestMapping("/signup")
+    @PostMapping("/signup")
     public ResponseEntity<OnboardingUserSignupResponseDTO> userSignup(@RequestBody OnboardingUserSignupRequestDTO onboardingUserSignupRequestDTO) {
 
         var responseDTO = new OnboardingUserSignupResponseDTO();
@@ -75,6 +75,18 @@ public class OnboardingController {
         if (!StringUtils.hasLength(email) || !StringUtils.hasLength(password) || !StringUtils.hasLength(name)) {
             responseDTO.setCode(CustomErrorCodes.MISSING_REQUIRED_PARAMETER.name());
             return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        if (onboardingService.checkIfUserExists(email)) {
+            responseDTO.setCode(CustomErrorCodes.USER_ALREADY_EXISTS.name());
+            return ResponseEntity.ok().body(responseDTO);
+        }
+
+        var userData = onboardingService.saveUser(name, email, password);
+        if (!ObjectUtils.isEmpty(userData)) {
+            responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
+            responseDTO.setId(userData.getUserId());
+            return ResponseEntity.ok().body(responseDTO);
         }
 
         responseDTO.setCode(CustomErrorCodes.GENERIC_ERROR.name());

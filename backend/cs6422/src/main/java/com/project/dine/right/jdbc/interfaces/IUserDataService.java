@@ -8,4 +8,7 @@ public interface IUserDataService {
 
     Optional<UserData> getUserDataByEmailAndEncryptedPassword(String email, String encryptedPassword);
 
+    Optional<UserData> getUserDataByEmail(String email);
+
+    Optional<UserData> save(UserData userData);
 }
