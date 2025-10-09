@@ -10,6 +10,5 @@ public enum CustomErrorCodes {
     INVALID_USER_ID("Invalid user id is given");
 
     CustomErrorCodes(String description) {
-
     }
 }

@@ -1,13 +1,14 @@
 package com.project.dine.right.dto;
 
+import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class OnboardingUserSignupResponseDTO {
 
-    @Setter
     private String code;
 
-    @Setter
     private Long id;
 
 }
