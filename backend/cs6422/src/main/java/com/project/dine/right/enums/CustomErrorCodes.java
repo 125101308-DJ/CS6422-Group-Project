@@ -7,7 +7,8 @@ public enum CustomErrorCodes {
     EMPTY_JSON("An empty request was provided"),
     GENERIC_ERROR("General error"),
     USER_ALREADY_EXISTS("User already exists"),
-    INVALID_USER_ID("Invalid user id is given");
+    INVALID_USER_ID("Invalid user id is given"),
+    USER_DOES_NOT_EXISTS("User doesn't exists");
 
     CustomErrorCodes(String description) {
     }

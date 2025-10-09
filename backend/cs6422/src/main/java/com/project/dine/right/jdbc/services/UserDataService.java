@@ -28,4 +28,9 @@ public class UserDataService implements IUserDataService {
     public Optional<UserData> save(UserData userData) {
         return Optional.of(userDataRepository.save(userData));
     }
+
+    @Override
+    public Optional<UserData> getUserDataById(Long userId) {
+        return Optional.ofNullable(userDataRepository.getUserDataById(userId));
+    }
 }

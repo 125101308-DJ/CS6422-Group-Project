@@ -1,9 +1,6 @@
 package com.project.dine.right.controller;
 
-import com.project.dine.right.dto.OnboardingUserLoginRequestDTO;
-import com.project.dine.right.dto.OnboardingUserLoginResponseDTO;
-import com.project.dine.right.dto.OnboardingUserSignupRequestDTO;
-import com.project.dine.right.dto.OnboardingUserSignupResponseDTO;
+import com.project.dine.right.dto.*;
 import com.project.dine.right.enums.CustomErrorCodes;
 import com.project.dine.right.interfaces.IOnboardingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +83,60 @@ public class OnboardingController {
         if (!ObjectUtils.isEmpty(userData)) {
             responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
             responseDTO.setId(userData.getUserId());
+            return ResponseEntity.ok().body(responseDTO);
+        }
+
+        responseDTO.setCode(CustomErrorCodes.GENERIC_ERROR.name());
+        return ResponseEntity.badRequest().body(responseDTO);
+    }
+
+    @PostMapping("/savePrefs")
+    public ResponseEntity<OnboardingUserSavePreferenceResponseDTO> userSavePreferences(@RequestBody OnboardingUserSavePreferenceRequestDTO onboardingUserSavePreferenceRequestDTO) {
+
+        var responseDTO = new OnboardingUserSavePreferenceResponseDTO();
+
+        //Early detection on existence of request body
+        if (ObjectUtils.isEmpty(onboardingUserSavePreferenceRequestDTO)) {
+            responseDTO.setCode(CustomErrorCodes.EMPTY_JSON.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        var userId = onboardingUserSavePreferenceRequestDTO.getUserId();
+
+        if (ObjectUtils.isEmpty(userId)) {
+            responseDTO.setCode(CustomErrorCodes.MISSING_REQUIRED_PARAMETER.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        if (!onboardingService.checkIfUserExists(userId)) {
+            responseDTO.setCode(CustomErrorCodes.USER_DOES_NOT_EXISTS.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        var preferences = onboardingUserSavePreferenceRequestDTO.getPreferenceObject();
+
+        if (!ObjectUtils.isEmpty(preferences)) {
+
+            var ambience = preferences.getAmbience();
+
+            if (!ambience.isEmpty()) {
+                onboardingService.saveAmbienceData(ambience, userId);
+            }
+
+            var cuisines = preferences.getCuisines();
+
+            if (!cuisines.isEmpty()) {
+                onboardingService.saveCuisinesData(cuisines, userId);
+            }
+
+            var priceRange = preferences.getPriceRange();
+            var location = preferences.getLocation();
+            var service = preferences.getService();
+
+            onboardingService.saveOtherPreferences(priceRange, location, service, userId);
+
+            responseDTO.setId(userId);
+            responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
             return ResponseEntity.ok().body(responseDTO);
         }
 

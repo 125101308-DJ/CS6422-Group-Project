@@ -14,4 +14,6 @@ public interface UserDataRepository extends CrudRepository<UserData, Long> {
     @Query("select * from UserData where email=:email")
     UserData getUserDataByEmail(@Param("email") String email);
 
+    @Query("select * from UserData where id=:userId")
+    UserData getUserDataById(@Param("userId") Long userId);
 }

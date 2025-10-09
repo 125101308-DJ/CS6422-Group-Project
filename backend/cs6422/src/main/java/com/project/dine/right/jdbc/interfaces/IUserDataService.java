@@ -11,4 +11,6 @@ public interface IUserDataService {
     Optional<UserData> getUserDataByEmail(String email);
 
     Optional<UserData> save(UserData userData);
+
+    Optional<UserData> getUserDataById(Long userId);
 }
