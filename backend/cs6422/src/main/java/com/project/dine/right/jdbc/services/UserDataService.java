@@ -18,4 +18,19 @@ public class UserDataService implements IUserDataService {
     public Optional<UserData> getUserDataByEmailAndEncryptedPassword(String email, String encryptedPassword) {
         return Optional.ofNullable(userDataRepository.getUserDataByEmailAndEncryptedPassword(email, encryptedPassword));
     }
+
+    @Override
+    public Optional<UserData> getUserDataByEmail(String email) {
+        return Optional.ofNullable(userDataRepository.getUserDataByEmail(email));
+    }
+
+    @Override
+    public Optional<UserData> save(UserData userData) {
+        return Optional.of(userDataRepository.save(userData));
+    }
+
+    @Override
+    public Optional<UserData> getUserDataById(Long userId) {
+        return Optional.ofNullable(userDataRepository.getUserDataById(userId));
+    }
 }

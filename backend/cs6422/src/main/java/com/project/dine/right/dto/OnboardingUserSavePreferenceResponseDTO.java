@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class OnboardingUserSignupResponseDTO {
+public class OnboardingUserSavePreferenceResponseDTO {
 
     private String code;
 
