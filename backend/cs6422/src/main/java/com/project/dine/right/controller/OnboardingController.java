@@ -1,6 +1,9 @@
 package com.project.dine.right.controller;
 
-import com.project.dine.right.dto.*;
+import com.project.dine.right.dto.OnboardingUserGeneralResponseDTO;
+import com.project.dine.right.dto.OnboardingUserLoginRequestDTO;
+import com.project.dine.right.dto.OnboardingUserSavePreferenceRequestDTO;
+import com.project.dine.right.dto.OnboardingUserSignupRequestDTO;
 import com.project.dine.right.enums.CustomErrorCodes;
 import com.project.dine.right.interfaces.IOnboardingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +23,9 @@ public class OnboardingController {
     IOnboardingService onboardingService;
 
     @GetMapping("/login")
-    public ResponseEntity<OnboardingUserLoginResponseDTO> userLogin(@RequestBody(required = false) OnboardingUserLoginRequestDTO onboardingUserLoginRequestDTO) {
+    public ResponseEntity<OnboardingUserGeneralResponseDTO> userLogin(@RequestBody(required = false) OnboardingUserLoginRequestDTO onboardingUserLoginRequestDTO) {
 
-        var responseDTO = new OnboardingUserLoginResponseDTO();
+        var responseDTO = new OnboardingUserGeneralResponseDTO();
 
         //Early detection on existence of request body
         if (ObjectUtils.isEmpty(onboardingUserLoginRequestDTO)) {
@@ -54,9 +57,9 @@ public class OnboardingController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<OnboardingUserSignupResponseDTO> userSignup(@RequestBody(required = false) OnboardingUserSignupRequestDTO onboardingUserSignupRequestDTO) {
+    public ResponseEntity<OnboardingUserGeneralResponseDTO> userSignup(@RequestBody(required = false) OnboardingUserSignupRequestDTO onboardingUserSignupRequestDTO) {
 
-        var responseDTO = new OnboardingUserSignupResponseDTO();
+        var responseDTO = new OnboardingUserGeneralResponseDTO();
 
         //Early detection on existence of request body
         if (ObjectUtils.isEmpty(onboardingUserSignupRequestDTO)) {
@@ -91,9 +94,9 @@ public class OnboardingController {
     }
 
     @PostMapping("/savePrefs")
-    public ResponseEntity<OnboardingUserSavePreferenceResponseDTO> userSavePreferences(@RequestBody(required = false) OnboardingUserSavePreferenceRequestDTO onboardingUserSavePreferenceRequestDTO) {
+    public ResponseEntity<OnboardingUserGeneralResponseDTO> userSavePreferences(@RequestBody(required = false) OnboardingUserSavePreferenceRequestDTO onboardingUserSavePreferenceRequestDTO) {
 
-        var responseDTO = new OnboardingUserSavePreferenceResponseDTO();
+        var responseDTO = new OnboardingUserGeneralResponseDTO();
 
         //Early detection on existence of request body
         if (ObjectUtils.isEmpty(onboardingUserSavePreferenceRequestDTO)) {

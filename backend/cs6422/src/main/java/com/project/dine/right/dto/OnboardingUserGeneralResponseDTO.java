@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OnboardingUserLoginResponseDTO {
+public class OnboardingUserGeneralResponseDTO {
 
     private Long id;
 
