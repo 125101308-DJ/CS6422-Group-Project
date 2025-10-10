@@ -20,7 +20,7 @@ public class OnboardingController {
     IOnboardingService onboardingService;
 
     @GetMapping("/login")
-    public ResponseEntity<OnboardingUserLoginResponseDTO> userLogin(@RequestBody OnboardingUserLoginRequestDTO onboardingUserLoginRequestDTO) {
+    public ResponseEntity<OnboardingUserLoginResponseDTO> userLogin(@RequestBody(required = false) OnboardingUserLoginRequestDTO onboardingUserLoginRequestDTO) {
 
         var responseDTO = new OnboardingUserLoginResponseDTO();
 
@@ -54,7 +54,7 @@ public class OnboardingController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<OnboardingUserSignupResponseDTO> userSignup(@RequestBody OnboardingUserSignupRequestDTO onboardingUserSignupRequestDTO) {
+    public ResponseEntity<OnboardingUserSignupResponseDTO> userSignup(@RequestBody(required = false) OnboardingUserSignupRequestDTO onboardingUserSignupRequestDTO) {
 
         var responseDTO = new OnboardingUserSignupResponseDTO();
 
@@ -91,7 +91,7 @@ public class OnboardingController {
     }
 
     @PostMapping("/savePrefs")
-    public ResponseEntity<OnboardingUserSavePreferenceResponseDTO> userSavePreferences(@RequestBody OnboardingUserSavePreferenceRequestDTO onboardingUserSavePreferenceRequestDTO) {
+    public ResponseEntity<OnboardingUserSavePreferenceResponseDTO> userSavePreferences(@RequestBody(required = false) OnboardingUserSavePreferenceRequestDTO onboardingUserSavePreferenceRequestDTO) {
 
         var responseDTO = new OnboardingUserSavePreferenceResponseDTO();
 
