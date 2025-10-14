@@ -8,7 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
 @Setter
-@Table("userPreferences")
+@Table(schema = "public", name = "userpreferences")
 public class UserPreferences {
 
     @Id

@@ -8,15 +8,15 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
 @Setter
-@Table("UserData")
+@Table(schema = "public", name = "userdata")
 public class UserData {
 
     @Id
     @Column("user_id")
     private Long userId;
 
-    @Column("username")
-    private String userName;
+    @Column("name")
+    private String name;
 
     @Column("email")
     private String email;
@@ -28,7 +28,7 @@ public class UserData {
     public String toString() {
         return "UserData{" +
                 "userId=" + userId +
-                ", userName='" + userName + '\'' +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';

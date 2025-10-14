@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface UserPreferredCuisinesRepository extends CrudRepository<UserPreferredCuisines, Long> {
 
-    @Query("select * from user_preferred_cuisines where user_id=:userId")
+    @Query("select * from public.user_preferred_cuisines where user_id=:userId")
     List<UserPreferredCuisines> findUserPreferredCuisinesByUserId(@Param("userId") Long userId);
 }

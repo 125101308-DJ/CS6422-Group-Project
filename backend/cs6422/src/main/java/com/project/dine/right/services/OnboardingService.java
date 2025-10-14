@@ -11,44 +11,47 @@ import com.project.dine.right.jdbc.models.UserData;
 import com.project.dine.right.jdbc.models.UserPreferences;
 import com.project.dine.right.jdbc.models.UserPreferredAmbience;
 import com.project.dine.right.jdbc.models.UserPreferredCuisines;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.List;
 
 @Service
 public class OnboardingService implements IOnboardingService {
 
-    @Value("${dine.right.secret}")
     private static String secret;
-
+    private static String iv;
     @Autowired
     IUserDataService userDataService;
-
     @Autowired
     IUserPreferencesService userPreferencesService;
-
     @Autowired
     IUserPreferredCuisinesService userPreferredCuisinesService;
-
     @Autowired
     IUserPreferredAmbienceService userPreferredAmbienceService;
+    @Value("${dine.right.secret}")
+    private String keyString;
+    @Value("${dine.right.iv}")
+    private String ivKey;
 
-    private static String getEncryptedString(String password) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    private static String getEncryptedString(String password) throws Exception {
         //Initializing AES-256 cipher and encrypting password
-        var cipher = Cipher.getInstance("AES-256");
-        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(secret.getBytes(), "AES-256"));
+        var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(secret.getBytes(), "AES"), new IvParameterSpec(iv.getBytes()));
         return Base64.getEncoder().encodeToString(cipher.doFinal(password.getBytes()));
+    }
+
+    @PostConstruct
+    public void init() {
+        secret = keyString;
+        iv = ivKey;
     }
 
     @Override
@@ -88,7 +91,7 @@ public class OnboardingService implements IOnboardingService {
 
             userData.setEmail(username);
             userData.setPassword(encryptedString);
-            userData.setUserName(name);
+            userData.setName(name);
 
             return userDataService.save(userData).orElse(null);
 
@@ -139,7 +142,7 @@ public class OnboardingService implements IOnboardingService {
             userPreferences.setPreferredService(service);
             userPreferencesService.save(userPreferences);
         } catch (Exception ignored) {
-            
+
         }
     }
 }

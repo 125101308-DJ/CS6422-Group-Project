@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
 @Setter
-@Table("user_preferred_ambience")
+@Table(schema = "public", name = "user_preferred_ambience")
 public class UserPreferredAmbience {
 
     @Column("user_id")

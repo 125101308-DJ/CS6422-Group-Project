@@ -8,12 +8,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserDataRepository extends CrudRepository<UserData, Long> {
-    @Query("select * from UserData where email=:email and password=:password")
+    @Query("select * from public.UserData where email=:email and password=:password")
     UserData getUserDataByEmailAndEncryptedPassword(@Param("email") String email, @Param("password") String encryptedPassword);
 
-    @Query("select * from UserData where email=:email")
+    @Query("select * from public.UserData where email=:email")
     UserData getUserDataByEmail(@Param("email") String email);
 
-    @Query("select * from UserData where id=:userId")
+    @Query("select * from public.UserData where id=:userId")
     UserData getUserDataById(@Param("userId") Long userId);
 }
