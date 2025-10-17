@@ -102,8 +102,8 @@ public class OnboardingService implements IOnboardingService {
     @Override
     public void saveAmenitiesData(List<AmenitiesVO> amenitiesVOList, Long userId) {
         try {
-            var userPreferredAmenities = new UserPreferredAmenities();
             for (AmenitiesVO ambience : amenitiesVOList) {
+                var userPreferredAmenities = new UserPreferredAmenities();
                 userPreferredAmenities.setUserId(userId);
                 userPreferredAmenities.setPreferredAmenities(ambience.getName());
                 userPreferredAmenitiesService.save(userPreferredAmenities);
@@ -116,8 +116,8 @@ public class OnboardingService implements IOnboardingService {
     @Override
     public void saveCuisinesData(List<CuisinesVO> cuisinesList, Long userId) {
         try {
-            var userPreferredCuisines = new UserPreferredCuisines();
             for (CuisinesVO cuisines : cuisinesList) {
+                var userPreferredCuisines = new UserPreferredCuisines();
                 userPreferredCuisines.setUserId(userId);
                 userPreferredCuisines.setPreferredCuisines(cuisines.getName());
                 userPreferredCuisinesService.save(userPreferredCuisines);
@@ -147,8 +147,8 @@ public class OnboardingService implements IOnboardingService {
     @Override
     public void saveRestaurantTypesData(List<RestaurantTypesVO> restaurantTypesVOS, Long userId) {
         try {
-            var userPreferredRestaurantTypes = new UserPreferredRestaurantTypes();
             for (RestaurantTypesVO restaurantTypes : restaurantTypesVOS) {
+                var userPreferredRestaurantTypes = new UserPreferredRestaurantTypes();
                 userPreferredRestaurantTypes.setUserId(userId);
                 userPreferredRestaurantTypes.setPreferredRestaurantType(restaurantTypes.getName());
                 userPreferredRestaurantTypesService.save(userPreferredRestaurantTypes);
