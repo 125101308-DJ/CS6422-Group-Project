@@ -1,20 +1,16 @@
 package com.project.dine.right.services;
 
-import com.project.dine.right.dto.vo.AmbienceVO;
+import com.project.dine.right.dto.vo.AmenitiesVO;
 import com.project.dine.right.dto.vo.CuisinesVO;
+import com.project.dine.right.dto.vo.RestaurantTypesVO;
 import com.project.dine.right.interfaces.IOnboardingService;
-import com.project.dine.right.jdbc.interfaces.IUserDataService;
-import com.project.dine.right.jdbc.interfaces.IUserPreferencesService;
-import com.project.dine.right.jdbc.interfaces.IUserPreferredAmbienceService;
-import com.project.dine.right.jdbc.interfaces.IUserPreferredCuisinesService;
-import com.project.dine.right.jdbc.models.UserData;
-import com.project.dine.right.jdbc.models.UserPreferences;
-import com.project.dine.right.jdbc.models.UserPreferredAmbience;
-import com.project.dine.right.jdbc.models.UserPreferredCuisines;
+import com.project.dine.right.jdbc.interfaces.*;
+import com.project.dine.right.jdbc.models.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.crypto.Cipher;
@@ -35,7 +31,9 @@ public class OnboardingService implements IOnboardingService {
     @Autowired
     IUserPreferredCuisinesService userPreferredCuisinesService;
     @Autowired
-    IUserPreferredAmbienceService userPreferredAmbienceService;
+    IUserPreferredAmenitiesService userPreferredAmenitiesService;
+    @Autowired
+    IUserPreferredRestaurantTypesService userPreferredRestaurantTypesService;
     @Value("${dine.right.secret}")
     private String keyString;
     @Value("${dine.right.iv}")
@@ -102,13 +100,13 @@ public class OnboardingService implements IOnboardingService {
     }
 
     @Override
-    public void saveAmbienceData(List<AmbienceVO> ambienceList, Long userId) {
+    public void saveAmenitiesData(List<AmenitiesVO> amenitiesVOList, Long userId) {
         try {
-            var userPreferredAmbience = new UserPreferredAmbience();
-            for (AmbienceVO ambience : ambienceList) {
-                userPreferredAmbience.setUserId(userId);
-                userPreferredAmbience.setPreferredAmbience(ambience.getName());
-                userPreferredAmbienceService.save(userPreferredAmbience);
+            var userPreferredAmenities = new UserPreferredAmenities();
+            for (AmenitiesVO ambience : amenitiesVOList) {
+                userPreferredAmenities.setUserId(userId);
+                userPreferredAmenities.setPreferredAmenities(ambience.getName());
+                userPreferredAmenitiesService.save(userPreferredAmenities);
             }
         } catch (Exception ignored) {
 
@@ -130,9 +128,9 @@ public class OnboardingService implements IOnboardingService {
     }
 
     @Override
-    public void saveOtherPreferences(String priceRange, String location, String service, Long userId) {
+    public void saveOtherPreferences(Long priceRange, String location, String service, Long userId) {
         try {
-            if (!StringUtils.hasLength(priceRange) && !StringUtils.hasLength(location) && !StringUtils.hasLength(service)) {
+            if (ObjectUtils.isEmpty(priceRange) && !StringUtils.hasLength(location) && !StringUtils.hasLength(service)) {
                 return;
             }
             var userPreferences = new UserPreferences();
@@ -141,6 +139,20 @@ public class OnboardingService implements IOnboardingService {
             userPreferences.setPreferredLocation(location);
             userPreferences.setPreferredService(service);
             userPreferencesService.save(userPreferences);
+        } catch (Exception ignored) {
+
+        }
+    }
+
+    @Override
+    public void saveRestaurantTypesData(List<RestaurantTypesVO> restaurantTypesVOS, Long userId) {
+        try {
+            var userPreferredRestaurantTypes = new UserPreferredRestaurantTypes();
+            for (RestaurantTypesVO restaurantTypes : restaurantTypesVOS) {
+                userPreferredRestaurantTypes.setUserId(userId);
+                userPreferredRestaurantTypes.setPreferredRestaurantType(restaurantTypes.getName());
+                userPreferredRestaurantTypesService.save(userPreferredRestaurantTypes);
+            }
         } catch (Exception ignored) {
 
         }

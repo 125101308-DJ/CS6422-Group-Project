@@ -10,22 +10,16 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @Setter
 @ToString
-@Table(schema = "public", name = "userpreferences")
-public class UserPreferences {
+@Table(schema = "public", name = "user_preferred_amenities")
+public class UserPreferredAmenities {
 
     @Id
-    @Column("preference_id")
-    private Long preferenceId;
+    @Column("a_id")
+    private Long id;
 
     @Column("user_id")
     private Long userId;
 
-    @Column("preferred_price_range")
-    private Long preferredPriceRange;
-
-    @Column("preferred_location")
-    private String preferredLocation;
-
-    @Column("preferred_service")
-    private String preferredService;
+    @Column("preferred_amenities")
+    private String preferredAmenities;
 }

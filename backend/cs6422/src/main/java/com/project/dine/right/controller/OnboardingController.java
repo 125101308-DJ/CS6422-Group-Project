@@ -120,16 +120,22 @@ public class OnboardingController {
 
         if (!ObjectUtils.isEmpty(preferences)) {
 
-            var ambience = preferences.getAmbience();
+            var amenities = preferences.getAmenities();
 
-            if (!ambience.isEmpty()) {
-                onboardingService.saveAmbienceData(ambience, userId);
+            if (!amenities.isEmpty()) {
+                onboardingService.saveAmenitiesData(amenities, userId);
             }
 
             var cuisines = preferences.getCuisines();
 
             if (!cuisines.isEmpty()) {
                 onboardingService.saveCuisinesData(cuisines, userId);
+            }
+
+            var restaurantTypes = preferences.getRestaurantTypes();
+
+            if (!restaurantTypes.isEmpty()) {
+                onboardingService.saveRestaurantTypesData(restaurantTypes, userId);
             }
 
             var priceRange = preferences.getPriceRange();

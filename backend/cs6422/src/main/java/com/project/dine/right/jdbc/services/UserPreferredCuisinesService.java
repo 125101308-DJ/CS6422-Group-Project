@@ -20,7 +20,7 @@ public class UserPreferredCuisinesService implements IUserPreferredCuisinesServi
     }
 
     @Override
-    public UserPreferredCuisines save(UserPreferredCuisines userPreferredCuisines) {
-        return userPreferredCuisinesRepository.save(userPreferredCuisines);
+    public void save(UserPreferredCuisines userPreferredCuisines) {
+        userPreferredCuisinesRepository.save(userPreferredCuisines);
     }
 }

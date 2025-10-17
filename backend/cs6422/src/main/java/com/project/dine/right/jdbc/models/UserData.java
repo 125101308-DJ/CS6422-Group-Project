@@ -2,12 +2,14 @@ package com.project.dine.right.jdbc.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
 @Setter
+@ToString
 @Table(schema = "public", name = "userdata")
 public class UserData {
 
@@ -23,14 +25,4 @@ public class UserData {
 
     @Column("password")
     private String password;
-
-    @Override
-    public String toString() {
-        return "UserData{" +
-                "userId=" + userId +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

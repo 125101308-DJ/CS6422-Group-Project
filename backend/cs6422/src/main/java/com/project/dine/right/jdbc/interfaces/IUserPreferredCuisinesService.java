@@ -8,6 +8,6 @@ public interface IUserPreferredCuisinesService {
 
     List<UserPreferredCuisines> findUserPreferredCuisinesByUserId(Long userId);
 
-    UserPreferredCuisines save(UserPreferredCuisines userPreferredCuisines);
+    void save(UserPreferredCuisines userPreferredCuisines);
 
 }

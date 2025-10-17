@@ -8,6 +8,6 @@ public interface IUserPreferencesService {
 
     List<UserPreferences> findUserPreferencesByUserId(Long userId);
 
-    UserPreferences save(UserPreferences userPreferences);
+    void save(UserPreferences userPreferences);
 
 }

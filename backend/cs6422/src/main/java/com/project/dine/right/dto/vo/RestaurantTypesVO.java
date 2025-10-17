@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CuisinesVO {
+public class RestaurantTypesVO {
 
     private String name;
 

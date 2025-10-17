@@ -20,7 +20,7 @@ public class UserPreferencesService implements IUserPreferencesService {
     }
 
     @Override
-    public UserPreferences save(UserPreferences userPreferences) {
-        return userPreferencesRepository.save(userPreferences);
+    public void save(UserPreferences userPreferences) {
+        userPreferencesRepository.save(userPreferences);
     }
 }
