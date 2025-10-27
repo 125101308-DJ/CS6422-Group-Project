@@ -11,10 +11,6 @@ public interface IOnboardingService {
 
     UserData userLogin(String username, String password);
 
-    boolean checkIfUserExists(String username);
-
-    boolean checkIfUserExists(Long userId);
-
     UserData saveUser(String name, String username, String password);
 
     void saveAmenitiesData(List<AmenitiesVO> amenitiesVOList, Long userId);

@@ -70,16 +70,6 @@ public class OnboardingService implements IOnboardingService {
     }
 
     @Override
-    public boolean checkIfUserExists(String username) {
-        return userDataService.getUserDataByEmail(username).isPresent();
-    }
-
-    @Override
-    public boolean checkIfUserExists(Long userId) {
-        return userDataService.getUserDataById(userId).isPresent();
-    }
-
-    @Override
     public UserData saveUser(String name, String username, String password) {
         try {
 

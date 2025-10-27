@@ -6,6 +6,7 @@ import com.project.dine.right.dto.OnboardingUserSavePreferenceRequestDTO;
 import com.project.dine.right.dto.OnboardingUserSignupRequestDTO;
 import com.project.dine.right.enums.CustomErrorCodes;
 import com.project.dine.right.interfaces.IOnboardingService;
+import com.project.dine.right.utils.UserDataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class OnboardingController {
+
+    public static final UserDataUtils USER_DATA_UTILS = UserDataUtils.getInstance();
 
     @Autowired
     IOnboardingService onboardingService;
@@ -77,7 +80,7 @@ public class OnboardingController {
             return ResponseEntity.badRequest().body(responseDTO);
         }
 
-        if (onboardingService.checkIfUserExists(email)) {
+        if (USER_DATA_UTILS.checkIfUserExists(email)) {
             responseDTO.setCode(CustomErrorCodes.USER_ALREADY_EXISTS.name());
             return ResponseEntity.ok().body(responseDTO);
         }
@@ -111,7 +114,7 @@ public class OnboardingController {
             return ResponseEntity.badRequest().body(responseDTO);
         }
 
-        if (!onboardingService.checkIfUserExists(userId)) {
+        if (!USER_DATA_UTILS.checkIfUserExists(userId)) {
             responseDTO.setCode(CustomErrorCodes.USER_DOES_NOT_EXISTS.name());
             return ResponseEntity.badRequest().body(responseDTO);
         }

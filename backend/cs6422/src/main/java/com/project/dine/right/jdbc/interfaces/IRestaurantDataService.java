@@ -8,4 +8,5 @@ public interface IRestaurantDataService {
 
     List<RestaurantData> findAll();
 
+    RestaurantData findByRestaurantId(Long restaurantId);
 }

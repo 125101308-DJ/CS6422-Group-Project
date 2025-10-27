@@ -19,4 +19,9 @@ public class RestaurantDataService implements IRestaurantDataService {
     public List<RestaurantData> findAll() {
         return StreamSupport.stream(restaurantDataRepository.findAll().spliterator(), false).toList();
     }
+
+    @Override
+    public RestaurantData findByRestaurantId(Long restaurantId) {
+        return restaurantDataRepository.findById(restaurantId).orElse(null);
+    }
 }
