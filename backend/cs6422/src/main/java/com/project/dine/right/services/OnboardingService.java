@@ -128,7 +128,7 @@ public class OnboardingService implements IOnboardingService {
     }
 
     @Override
-    public void saveOtherPreferences(Long priceRange, String location, String service, Long userId) {
+    public void saveOtherPreferences(String priceRange, String location, String service, Long userId) {
         try {
             if (ObjectUtils.isEmpty(priceRange) && !StringUtils.hasLength(location) && !StringUtils.hasLength(service)) {
                 return;

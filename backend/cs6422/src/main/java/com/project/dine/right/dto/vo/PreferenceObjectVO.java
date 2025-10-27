@@ -11,7 +11,7 @@ import java.util.List;
 @ToString
 public class PreferenceObjectVO {
 
-    private Long priceRange;
+    private String priceRange;
 
     private String location;
 
