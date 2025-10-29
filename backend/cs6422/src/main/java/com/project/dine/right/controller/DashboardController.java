@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DashboardController {
 
-    public static final UserDataUtils USER_DATA_UTILS = UserDataUtils.getInstance();
+    @Autowired
+    private UserDataUtils USER_DATA_UTILS;
 
     @Autowired
     private IDashboardService dashboardService;

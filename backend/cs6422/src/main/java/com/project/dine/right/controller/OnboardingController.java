@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OnboardingController {
 
-    public static final UserDataUtils USER_DATA_UTILS = UserDataUtils.getInstance();
-
     @Autowired
     IOnboardingService onboardingService;
+    @Autowired
+    private UserDataUtils USER_DATA_UTILS;
 
     @GetMapping("/login")
     public ResponseEntity<OnboardingUserGeneralResponseDTO> userLogin(@RequestBody(required = false) OnboardingUserLoginRequestDTO onboardingUserLoginRequestDTO) {
