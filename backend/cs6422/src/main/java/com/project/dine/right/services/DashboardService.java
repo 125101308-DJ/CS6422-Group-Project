@@ -90,6 +90,7 @@ public class DashboardService implements IDashboardService {
                             n.setRestaurantName(restaurant.getName());
                             n.setComment(o.getReviewText());
                             n.setRating(Integer.valueOf(o.getRating()));
+                            n.setDate(o.getReviewDate());
                             return n;
                         }).toList());
             } else {
@@ -110,7 +111,7 @@ public class DashboardService implements IDashboardService {
 
         for (var wishlistRestaurant : myWishlist) {
             var wishlistRestaurantVO = new WishlistRestaurantVO();
-            
+
             wishlistRestaurantVO.setRestaurantId(wishlistRestaurant.getId());
             var restaurant = restaurantDataService.findByRestaurantId(wishlistRestaurant.getPlaceId());
             wishlistRestaurantVO.setRestaurantName(restaurant.getName());

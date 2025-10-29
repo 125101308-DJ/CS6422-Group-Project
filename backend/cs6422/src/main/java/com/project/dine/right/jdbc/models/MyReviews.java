@@ -28,4 +28,7 @@ public class MyReviews {
 
     @Column("review_text")
     private String reviewText;
+    
+    @Column("review_date")
+    private String reviewDate;
 }

@@ -20,4 +20,6 @@ public class MyUserReviewVO {
     private Integer rating;
 
     private String comment;
+
+    private String date;
 }
