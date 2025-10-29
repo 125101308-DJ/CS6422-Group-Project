@@ -103,10 +103,11 @@ User Preferences → Feature Engineering → ML Model → Personalized Rankings 
 - **React Router** - Seamless navigation
 
 ### Backend
-- **Python / Flask** - RESTful API server
+- **Spring Boot** - Java-based backend framework
 - **FastAPI** - High-performance endpoints (alternative)
 - **PostgreSQL** - Relational database for structured data
 - **Redis** - Caching layer for fast recommendations
+
 
 ### Machine Learning
 - **scikit-learn** - Collaborative filtering algorithms
