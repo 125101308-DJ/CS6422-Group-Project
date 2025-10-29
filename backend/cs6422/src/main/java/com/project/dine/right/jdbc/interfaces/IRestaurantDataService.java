@@ -1,12 +1,12 @@
 package com.project.dine.right.jdbc.interfaces;
 
-import com.project.dine.right.jdbc.models.RestaurantData;
+import com.project.dine.right.jdbc.models.RestaurantMetaData;
 
 import java.util.List;
 
 public interface IRestaurantDataService {
 
-    List<RestaurantData> findAll();
+    List<RestaurantMetaData> findAll();
 
-    RestaurantData findByRestaurantId(Long restaurantId);
+    RestaurantMetaData findByRestaurantId(Long restaurantId);
 }

@@ -10,8 +10,8 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @Setter
 @ToString
-@Table(schema = "public", name = "restaurantdata")
-public class RestaurantData {
+@Table(schema = "public", name = "restaurant_metadata")
+public class RestaurantMetaData {
 
     @Id
     @Column("place_id")
