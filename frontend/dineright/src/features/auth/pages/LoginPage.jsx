@@ -4,7 +4,7 @@ import { Link, useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginStart, loginSuccess, loginFailure } from "../authSlice";
 import { loginUser } from "../authservice";
-
+import { loginUserapi } from "../authservice";
 
 import "./LoginPage.css";
 
@@ -29,15 +29,30 @@ const LoginPage = () => {
     try {
       dispatch(loginStart());
       const data = loginUser(formData.email, formData.password);
+      // const data = loginUserapi(formData.email, formData.password);
+      console.log("API Response:", data);
+
 
 
       if (data.code === "SUCCESS") {
         dispatch(loginSuccess({ id: data.id, email: formData.email }));
         navigate("/home", { replace: true });
-      } else {
-        dispatch(loginFailure("Invalid credentials"));
-        alert("Invalid email or password");
-      }
+      } 
+      else if (data.code === "USER_ALREADY_EXISTS") {
+      
+      dispatch(loginFailure("User already exists"));
+      alert("User already exists. Please use a different email or login.");
+    } 
+    else if (data.code === "INVALID_USER_ID") {
+
+      dispatch(loginFailure("Invalid user ID"));
+      alert("Invalid user ID. Please check your credentials.");
+    } 
+    else {
+      
+      dispatch(loginFailure("Invalid credentials"));
+      alert("Invalid email or password");
+    }
     } catch (err) {
       dispatch(loginFailure(err.message));
       alert("Login failed");

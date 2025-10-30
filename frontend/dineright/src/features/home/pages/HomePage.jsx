@@ -2,7 +2,7 @@ import {React,useState, useEffect} from "react";
 import Sidebar from "../components/Sidebar";
 import "./HomePage.css";
 import { useNavigate } from "react-router-dom";
-
+import { fetchrestaurantsapi } from "../homeservice";
 
 
 
@@ -12,36 +12,17 @@ const fetchRestaurants = async () => {
     setTimeout(() => {
       resolve([
         {
-          id: 1,
-          name: "Blue Ocean Seafood",
-          location: "Miami",
-          cuisine: "Seafood",
-          reviews: [
-            { user: "John", rating: 4.8, comment: "Amazing food!" },
-          ],
-        },
-        {
-          id: 2,
-          name: "Spice Route",
-          location: "New York",
-          cuisine: "Indian",
-          reviews: [
-            { user: "Anna", rating: 4.6, comment: "Loved the spices!" },
-          ],
-        },
-        {
-          id: 3,
-          name: "Tokyo Sushi House",
-          location: "San Francisco",
-          cuisine: "Japanese",
-          reviews: [
-            { user: "Mark", rating: 4.9, comment: "Best sushi in town!" },
-          ],
-        },
+          "code":"SUCCESS",
+          "restaurants":[
+            { id: 1, name: "Blue Ocean Seafood", location: "Miami", cuisine: "Seafood", reviews: [ { user: "John", rating: 4.8, comment: "Amazing food!" }, ], }, { id: 2, name: "Spice Route", location: "New York", cuisine: "Indian", reviews: [ { user: "Anna", rating: 4.6, comment: "Loved the spices!" }, ], }, { id: 3, name: "Tokyo Sushi House", location: "San Francisco", cuisine: "Japanese", reviews: [ { user: "Mark", rating: 4.9, comment: "Best sushi in town!" }, ], }
+          ]
+        }
       ]);
     }, 1000);
   });
 };
+
+
 
 
 const HomePage = () => {
@@ -52,11 +33,22 @@ const HomePage = () => {
 
     useEffect(() => {
     const loadRestaurants = async () => {
-      const data = await fetchRestaurants();
-      console.log("loading rest data");
-      
-      setRestaurants(data);
-      setFiltered(data); // initially show all
+      // 
+      try {
+        const data = await fetchrestaurantsapi();
+        // const data = await fetchRestaurants();
+        console.log("Restaurants API Response:", data);
+        if (data.code === "SUCCESS" && Array.isArray(data.restaurants)) {
+          setRestaurants(data.restaurants);
+          setFiltered(data.restaurants);
+        } else {
+          console.error("Failed to load restaurants:", data.code);
+          alert("Could not load restaurants. Please try again later.");
+        }
+      } catch (error) {
+        console.error("Error fetching restaurants:", err);
+        alert("Error loading restaurant data.");
+      } // initially show all
     };
     loadRestaurants();
   }, []);

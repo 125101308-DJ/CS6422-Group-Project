@@ -2,14 +2,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./SignUpPage.css";
+import { loginStart, loginSuccess, loginFailure } from "../authSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { signupapi } from "../authservice";
 
 
 const SignUpPage = () => {
 
   const navigate = useNavigate()
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
-
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -18,7 +21,25 @@ const SignUpPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Sign up attempt:", formData);
-    navigate("/preferences");
+    try {
+      const data = signupapi(formData.name, formData.email, formData.password);
+      console.log("Signup API Response:", data);
+      if (data.code === "SUCCESS") {
+      dispatch(loginSuccess({ id: data.id, email: formData.email, name: formData.name }));
+      navigate("/preferences", { replace: true });
+    } else if (data.code === "USER_ALREADY_EXISTS") {
+      dispatch(loginFailure("User already exists"));
+      alert("User already exists. Please login instead.");
+    } else {
+      dispatch(loginFailure("Signup failed"));
+      alert("Signup failed. Please try again.");
+    }
+      
+    } catch (error) {
+      dispatch(loginFailure(err.message));
+      alert("Error connecting to server.");
+    }
+    
     // later: dispatch(signup(formData))
   };
 
