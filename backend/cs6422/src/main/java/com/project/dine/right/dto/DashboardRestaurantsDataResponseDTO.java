@@ -1,7 +1,7 @@
 package com.project.dine.right.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.project.dine.right.dto.vo.RestaurantDataVO;
+import com.project.dine.right.dto.vo.RestaurantsVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,6 +16,6 @@ public class DashboardRestaurantsDataResponseDTO {
 
     private String code;
 
-    private List<RestaurantDataVO> restaurantData;
+    private List<RestaurantsVO> restaurants;
 
 }

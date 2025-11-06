@@ -1,7 +1,7 @@
 package com.project.dine.right.interfaces;
 
 import com.project.dine.right.dto.vo.MyUserVO;
-import com.project.dine.right.dto.vo.RestaurantDataVO;
+import com.project.dine.right.dto.vo.RestaurantsVO;
 import com.project.dine.right.dto.vo.TopKRestaurantVO;
 import com.project.dine.right.dto.vo.WishlistRestaurantVO;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IDashboardService {
 
-    List<RestaurantDataVO> getRestaurants();
+    List<RestaurantsVO> getRestaurants();
 
     MyUserVO getMyUser(Long userId);
 

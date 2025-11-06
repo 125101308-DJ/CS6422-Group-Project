@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DashboardController {
 
     @Autowired
-    private UserDataUtils USER_DATA_UTILS;
+    private UserDataUtils userDataUtils;
 
     @Autowired
     private IDashboardService dashboardService;
@@ -28,7 +28,7 @@ public class DashboardController {
 
         var restaurants = dashboardService.getRestaurants();
 
-        responseDTO.setRestaurantData(restaurants);
+        responseDTO.setRestaurants(restaurants);
         responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
         return ResponseEntity.ok().body(responseDTO);
     }
@@ -43,7 +43,7 @@ public class DashboardController {
             return ResponseEntity.badRequest().body(responseDTO);
         }
 
-        if (!USER_DATA_UTILS.checkIfUserExists(userId)) {
+        if (!userDataUtils.checkIfUserExists(userId)) {
             responseDTO.setCode(CustomErrorCodes.USER_DOES_NOT_EXISTS.name());
             return ResponseEntity.badRequest().body(responseDTO);
         }

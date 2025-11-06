@@ -31,23 +31,31 @@ public class DashboardService implements IDashboardService {
     private ITopRestaurantsService topRestaurantsService;
 
     @Override
-    public List<RestaurantDataVO> getRestaurants() {
+    public List<RestaurantsVO> getRestaurants() {
 
-        var resultLst = new ArrayList<RestaurantDataVO>();
+        var resultLst = new ArrayList<RestaurantsVO>();
         var restaurants = restaurantDataService.findAll();
 
         for (var restaurant : restaurants) {
-            var restaurantDataVO = new RestaurantDataVO();
-            restaurantDataVO.setName(restaurant.getName());
-            restaurantDataVO.setId(restaurant.getPlaceId());
-            restaurantDataVO.setLocation(restaurant.getAddress());
-            restaurantDataVO.setCuisine(restaurant.getCuisineType());
+            var restaurantsVO = new RestaurantsVO();
+            restaurantsVO.setName(restaurant.getName());
+            restaurantsVO.setPlaceId(restaurant.getPlaceId());
+            restaurantsVO.setLocation(restaurant.getAddress());
+            restaurantsVO.setCuisine(restaurant.getCuisineType());
+            restaurantsVO.setRestaurantType(restaurant.getRestaurantType());
+            restaurantsVO.setPriceRange(restaurant.getPriceRange());
+            restaurantsVO.setOverallRating(String.valueOf(restaurant.getRating()));
+            restaurantsVO.setAmenities(restaurant.getAmenities());
+            restaurantsVO.setAtmosphere(restaurant.getAtmosphere());
+            restaurantsVO.setDietaryOptions(restaurant.getDietaryOptions());
+            restaurantsVO.setServiceOptions(restaurant.getServiceOptions());
+            restaurantsVO.setPhone(restaurant.getPhone());
 
             var restaurantReviews = userReviewsService.findAllByPlaceId(restaurant.getPlaceId());
 
             // With Java streams, create the List of Reviews for our Response Object from the result of the query with one line
             if (!restaurantReviews.isEmpty()) {
-                restaurantDataVO.setReviews(restaurantReviews.stream()
+                restaurantsVO.setReviews(restaurantReviews.stream()
                         .map(o -> {
                             var n = new ReviewsVO();
                             n.setUser(o.getUsername());
@@ -57,7 +65,7 @@ public class DashboardService implements IDashboardService {
                         }).toList());
             }
 
-            resultLst.add(restaurantDataVO);
+            resultLst.add(restaurantsVO);
         }
 
         return resultLst;

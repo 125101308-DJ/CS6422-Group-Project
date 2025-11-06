@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,9 +22,9 @@ public class OnboardingController {
     @Autowired
     IOnboardingService onboardingService;
     @Autowired
-    private UserDataUtils USER_DATA_UTILS;
+    private UserDataUtils userDataUtils;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<OnboardingUserGeneralResponseDTO> userLogin(@RequestBody(required = false) OnboardingUserLoginRequestDTO onboardingUserLoginRequestDTO) {
 
         var responseDTO = new OnboardingUserGeneralResponseDTO();
@@ -80,7 +79,7 @@ public class OnboardingController {
             return ResponseEntity.badRequest().body(responseDTO);
         }
 
-        if (USER_DATA_UTILS.checkIfUserExists(email)) {
+        if (userDataUtils.checkIfUserExists(email)) {
             responseDTO.setCode(CustomErrorCodes.USER_ALREADY_EXISTS.name());
             return ResponseEntity.ok().body(responseDTO);
         }
@@ -114,7 +113,7 @@ public class OnboardingController {
             return ResponseEntity.badRequest().body(responseDTO);
         }
 
-        if (!USER_DATA_UTILS.checkIfUserExists(userId)) {
+        if (!userDataUtils.checkIfUserExists(userId)) {
             responseDTO.setCode(CustomErrorCodes.USER_DOES_NOT_EXISTS.name());
             return ResponseEntity.badRequest().body(responseDTO);
         }
