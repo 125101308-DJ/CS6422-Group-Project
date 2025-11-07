@@ -8,7 +8,8 @@ public enum CustomErrorCodes {
     GENERIC_ERROR("General error"),
     USER_ALREADY_EXISTS("User already exists"),
     INVALID_USER_ID("Invalid user id is given"),
-    USER_DOES_NOT_EXISTS("User doesn't exists");
+    USER_DOES_NOT_EXISTS("User doesn't exists"),
+    ALREADY_REVIEWED_CURRENT_RESTAURANT("User already reviewed this restaurant");
 
     CustomErrorCodes(String description) {
     }

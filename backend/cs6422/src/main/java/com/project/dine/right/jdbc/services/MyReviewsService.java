@@ -18,4 +18,11 @@ public class MyReviewsService implements IMyReviewsService {
     public List<MyReviews> findAllByUserId(Long userId) {
         return myReviewsRepository.findAllByUserId(userId);
     }
+
+    @Override
+    public MyReviews save(MyReviews myReviews) {
+        return myReviewsRepository.save(myReviews);
+    }
+
+
 }

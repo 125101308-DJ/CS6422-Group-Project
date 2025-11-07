@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class OnboardingController {
 
     @Autowired
-    IOnboardingService onboardingService;
+    private IOnboardingService onboardingService;
+
     @Autowired
     private UserDataUtils userDataUtils;
 

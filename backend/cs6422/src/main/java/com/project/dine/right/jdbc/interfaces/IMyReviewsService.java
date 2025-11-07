@@ -8,4 +8,6 @@ public interface IMyReviewsService {
 
     List<MyReviews> findAllByUserId(Long userId);
 
+    MyReviews save(MyReviews myReviews);
+
 }
