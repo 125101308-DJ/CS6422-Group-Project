@@ -11,6 +11,8 @@ public interface IDashboardService {
 
     List<RestaurantsVO> getRestaurants();
 
+    RestaurantsVO getRestaurantById(Long id);
+
     MyUserVO getMyUser(Long userId);
 
     List<WishlistRestaurantVO> getWishlistRestaurants(Long userId);

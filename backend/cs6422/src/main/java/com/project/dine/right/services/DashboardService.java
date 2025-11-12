@@ -3,8 +3,10 @@ package com.project.dine.right.services;
 import com.project.dine.right.dto.vo.*;
 import com.project.dine.right.interfaces.IDashboardService;
 import com.project.dine.right.jdbc.interfaces.*;
+import com.project.dine.right.jdbc.models.RestaurantMetaData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,38 +39,26 @@ public class DashboardService implements IDashboardService {
         var restaurants = restaurantDataService.findAll();
 
         for (var restaurant : restaurants) {
-            var restaurantsVO = new RestaurantsVO();
-            restaurantsVO.setName(restaurant.getName());
-            restaurantsVO.setPlaceId(restaurant.getPlaceId());
-            restaurantsVO.setLocation(restaurant.getAddress());
-            restaurantsVO.setCuisine(restaurant.getCuisineType());
-            restaurantsVO.setRestaurantType(restaurant.getRestaurantType());
-            restaurantsVO.setPriceRange(restaurant.getPriceRange());
-            restaurantsVO.setOverallRating(String.valueOf(restaurant.getRating()));
-            restaurantsVO.setAmenities(restaurant.getAmenities());
-            restaurantsVO.setAtmosphere(restaurant.getAtmosphere());
-            restaurantsVO.setDietaryOptions(restaurant.getDietaryOptions());
-            restaurantsVO.setServiceOptions(restaurant.getServiceOptions());
-            restaurantsVO.setPhone(restaurant.getPhone());
-
-            var restaurantReviews = userReviewsService.findAllByPlaceId(restaurant.getPlaceId());
-
-            // With Java streams, create the List of Reviews for our Response Object from the result of the query with one line
-            if (!restaurantReviews.isEmpty()) {
-                restaurantsVO.setReviews(restaurantReviews.stream()
-                        .map(o -> {
-                            var n = new ReviewsVO();
-                            n.setUser(o.getUsername());
-                            n.setRating(o.getRating());
-                            n.setComment(o.getReviewText());
-                            return n;
-                        }).toList());
-            }
+            var restaurantsVO = getRestaurantsVO(restaurant);
 
             resultLst.add(restaurantsVO);
         }
 
         return resultLst;
+    }
+
+    @Override
+    public RestaurantsVO getRestaurantById(Long id) {
+
+        var restaurant = restaurantDataService.findByRestaurantId(id);
+
+        if (!ObjectUtils.isEmpty(restaurant)) {
+
+            return getRestaurantsVO(restaurant);
+
+        }
+
+        return null;
     }
 
     @Override
@@ -151,5 +141,36 @@ public class DashboardService implements IDashboardService {
         }
 
         return resultLst;
+    }
+
+    private RestaurantsVO getRestaurantsVO(RestaurantMetaData restaurant) {
+        var restaurantsVO = new RestaurantsVO();
+        restaurantsVO.setName(restaurant.getName());
+        restaurantsVO.setPlaceId(restaurant.getPlaceId());
+        restaurantsVO.setLocation(restaurant.getAddress());
+        restaurantsVO.setCuisine(restaurant.getCuisineType());
+        restaurantsVO.setRestaurantType(restaurant.getRestaurantType());
+        restaurantsVO.setPriceRange(restaurant.getPriceRange());
+        restaurantsVO.setOverallRating(String.valueOf(restaurant.getRating()));
+        restaurantsVO.setAmenities(restaurant.getAmenities());
+        restaurantsVO.setAtmosphere(restaurant.getAtmosphere());
+        restaurantsVO.setDietaryOptions(restaurant.getDietaryOptions());
+        restaurantsVO.setServiceOptions(restaurant.getServiceOptions());
+        restaurantsVO.setPhone(restaurant.getPhone());
+
+        var restaurantReviews = userReviewsService.findAllByPlaceId(restaurant.getPlaceId());
+
+        // With Java streams, create the List of Reviews for our Response Object from the result of the query with one line
+        if (!restaurantReviews.isEmpty()) {
+            restaurantsVO.setReviews(restaurantReviews.stream()
+                    .map(o -> {
+                        var n = new ReviewsVO();
+                        n.setUser(o.getUsername());
+                        n.setRating(o.getRating());
+                        n.setComment(o.getReviewText());
+                        return n;
+                    }).toList());
+        }
+        return restaurantsVO;
     }
 }

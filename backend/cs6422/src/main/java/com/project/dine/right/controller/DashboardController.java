@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collections;
 
 @RestController
 public class DashboardController {
@@ -29,6 +32,18 @@ public class DashboardController {
         var restaurants = dashboardService.getRestaurants();
 
         responseDTO.setRestaurants(restaurants);
+        responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @GetMapping("/getRestaurantsDataById/{id}")
+    public ResponseEntity<DashboardRestaurantsDataResponseDTO> getRestaurantsDataById(@PathVariable("id") Long id) {
+
+        var responseDTO = new DashboardRestaurantsDataResponseDTO();
+
+        var restaurants = dashboardService.getRestaurantById(id);
+
+        responseDTO.setRestaurants(Collections.singletonList(restaurants));
         responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
         return ResponseEntity.ok().body(responseDTO);
     }
