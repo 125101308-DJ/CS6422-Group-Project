@@ -141,11 +141,12 @@ public class OnboardingController {
                 onboardingService.saveRestaurantTypesData(restaurantTypes, userId);
             }
 
-            var priceRange = preferences.getPriceRange();
-            var location = preferences.getLocation();
-            var service = preferences.getService();
+            var atmosphere = preferences.getAtmosphere();
 
-            onboardingService.saveOtherPreferences(priceRange, location, service, userId);
+            var priceRange = preferences.getPriceLevel();
+            var location = preferences.getAddress();
+
+            onboardingService.saveOtherPreferences(priceRange, location, userId);
 
             responseDTO.setId(userId);
             responseDTO.setCode(CustomErrorCodes.SUCCESS.name());

@@ -11,11 +11,13 @@ import java.util.List;
 @ToString
 public class PreferenceObjectVO {
 
-    private String priceRange;
+    private String priceLevel;
 
-    private String location;
+    private String address;
 
-    private String service;
+    private String atmosphere;
+
+    private String radius;
 
     private List<AmenitiesVO> amenities;
 

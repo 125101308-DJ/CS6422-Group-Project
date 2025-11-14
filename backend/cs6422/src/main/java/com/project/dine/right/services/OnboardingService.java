@@ -118,16 +118,16 @@ public class OnboardingService implements IOnboardingService {
     }
 
     @Override
-    public void saveOtherPreferences(String priceRange, String location, String service, Long userId) {
+    public void saveOtherPreferences(String priceRange, String location, Long userId) {
         try {
-            if (ObjectUtils.isEmpty(priceRange) && !StringUtils.hasLength(location) && !StringUtils.hasLength(service)) {
+            if (ObjectUtils.isEmpty(priceRange) && !StringUtils.hasLength(location)) {
                 return;
             }
             var userPreferences = new UserPreferences();
             userPreferences.setUserId(userId);
             userPreferences.setPreferredPriceRange(priceRange);
             userPreferences.setPreferredLocation(location);
-            userPreferences.setPreferredService(service);
+            //userPreferences.setPreferredService(service);
             userPreferencesService.save(userPreferences);
         } catch (Exception ignored) {
 
