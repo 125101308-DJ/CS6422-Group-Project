@@ -33,6 +33,8 @@ public class OnboardingService implements IOnboardingService {
     @Autowired
     IUserPreferredAmenitiesService userPreferredAmenitiesService;
     @Autowired
+    IPreferredAtmosphereService preferredAtmosphereService;
+    @Autowired
     IUserPreferredRestaurantTypesService userPreferredRestaurantTypesService;
     @Value("${dine.right.secret}")
     private String keyString;
@@ -98,6 +100,18 @@ public class OnboardingService implements IOnboardingService {
                 userPreferredAmenities.setPreferredAmenities(ambience.getName());
                 userPreferredAmenitiesService.save(userPreferredAmenities);
             }
+        } catch (Exception ignored) {
+
+        }
+    }
+
+    @Override
+    public void saveAtmosphereData(String preferredAtmosphere, Long userId) {
+        try {
+            var atmosphere = new PreferredAtmosphere();
+            atmosphere.setUserId(userId);
+            atmosphere.setPreferredAtmosphere(preferredAtmosphere);
+            preferredAtmosphereService.save(atmosphere);
         } catch (Exception ignored) {
 
         }

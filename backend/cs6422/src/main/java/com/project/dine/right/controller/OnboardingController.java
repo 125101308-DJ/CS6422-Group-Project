@@ -143,6 +143,8 @@ public class OnboardingController {
 
             var atmosphere = preferences.getAtmosphere();
 
+            onboardingService.saveAtmosphereData(atmosphere, userId);
+
             var priceRange = preferences.getPriceLevel();
             var location = preferences.getAddress();
 

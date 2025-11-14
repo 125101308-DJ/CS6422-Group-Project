@@ -15,6 +15,8 @@ public interface IOnboardingService {
 
     void saveAmenitiesData(List<AmenitiesVO> amenitiesVOList, Long userId);
 
+    void saveAtmosphereData(String preferredAtmosphere, Long userId);
+
     void saveCuisinesData(List<CuisinesVO> cuisinesList, Long userId);
 
     void saveOtherPreferences(String priceRange, String location, Long userId);
