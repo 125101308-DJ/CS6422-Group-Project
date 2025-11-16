@@ -26,6 +26,6 @@ public class UserPreferences {
     @Column("preferred_location")
     private String preferredLocation;
 
-    @Column("preferred_service")
-    private String preferredService;
+    @Column("radius")
+    private String radius;
 }
