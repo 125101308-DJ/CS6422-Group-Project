@@ -11,9 +11,9 @@ import java.util.List;
 @ToString
 public class PreferenceObjectVO {
 
-    private String priceLevel;
+    private Long priceLevel;
 
-    private String address;
+    private String location;
 
     private String atmosphere;
 

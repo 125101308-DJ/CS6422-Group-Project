@@ -146,9 +146,10 @@ public class OnboardingController {
             onboardingService.saveAtmosphereData(atmosphere, userId);
 
             var priceRange = preferences.getPriceLevel();
-            var location = preferences.getAddress();
+            var location = preferences.getLocation();
+            var radius = preferences.getRadius();
 
-            onboardingService.saveOtherPreferences(priceRange, location, userId);
+            onboardingService.saveOtherPreferences(priceRange, location, userId, radius);
 
             responseDTO.setId(userId);
             responseDTO.setCode(CustomErrorCodes.SUCCESS.name());

@@ -21,7 +21,7 @@ public class UserPreferences {
     private Long userId;
 
     @Column("preferred_price_range")
-    private String preferredPriceRange;
+    private Long preferredPriceRange;
 
     @Column("preferred_location")
     private String preferredLocation;

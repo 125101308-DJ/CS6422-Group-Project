@@ -132,7 +132,7 @@ public class OnboardingService implements IOnboardingService {
     }
 
     @Override
-    public void saveOtherPreferences(String priceRange, String location, Long userId) {
+    public void saveOtherPreferences(Long priceRange, String location, Long userId, String radius) {
         try {
             if (ObjectUtils.isEmpty(priceRange) && !StringUtils.hasLength(location)) {
                 return;
@@ -141,6 +141,7 @@ public class OnboardingService implements IOnboardingService {
             userPreferences.setUserId(userId);
             userPreferences.setPreferredPriceRange(priceRange);
             userPreferences.setPreferredLocation(location);
+            userPreferences.setRadius(radius);
             //userPreferences.setPreferredService(service);
             userPreferencesService.save(userPreferences);
         } catch (Exception ignored) {
