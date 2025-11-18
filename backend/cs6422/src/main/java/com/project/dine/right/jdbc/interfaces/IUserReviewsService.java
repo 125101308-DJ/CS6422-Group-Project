@@ -8,4 +8,5 @@ public interface IUserReviewsService {
 
     List<UserReviews> findAllByPlaceId(Long placeId);
 
+    void save(UserReviews userReview);
 }

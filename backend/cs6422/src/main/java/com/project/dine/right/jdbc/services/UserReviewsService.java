@@ -18,4 +18,9 @@ public class UserReviewsService implements IUserReviewsService {
     public List<UserReviews> findAllByPlaceId(Long placeId) {
         return userReviewsRepository.findAllByPlaceId(placeId);
     }
+
+    @Override
+    public void save(UserReviews userReview) {
+        userReviewsRepository.save(userReview);
+    }
 }
