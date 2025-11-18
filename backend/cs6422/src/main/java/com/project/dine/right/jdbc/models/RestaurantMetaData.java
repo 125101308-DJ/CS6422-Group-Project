@@ -29,32 +29,17 @@ public class RestaurantMetaData {
     @Column("address")
     private String address;
 
-    @Column("country")
-    private String country;
-
     @Column("rating")
     private Float rating;
-
-    @Column("review_count")
-    private Long reviewCount;
 
     @Column("price_range")
     private String priceRange;
 
-    @Column("phone")
+    @Column("phone_number")
     private String phone;
-
-    @Column("website")
-    private String website;
 
     @Column("atmosphere")
     private String atmosphere;
-
-    @Column("dietary_options")
-    private String dietaryOptions;
-
-    @Column("service_options")
-    private String serviceOptions;
 
     @Column("amenities")
     private String amenities;

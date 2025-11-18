@@ -24,5 +24,10 @@ public class MyReviewsService implements IMyReviewsService {
         return myReviewsRepository.save(myReviews);
     }
 
+    @Override
+    public Long countMyReviews() {
+        return myReviewsRepository.count();
+    }
+
 
 }

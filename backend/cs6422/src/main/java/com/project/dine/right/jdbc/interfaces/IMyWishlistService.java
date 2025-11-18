@@ -8,4 +8,6 @@ public interface IMyWishlistService {
 
     List<MyWishlist> findByUserId(Long userId);
 
+    Long countMyWishlists();
+
 }

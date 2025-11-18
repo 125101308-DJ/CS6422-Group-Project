@@ -14,11 +14,14 @@ import org.springframework.data.relational.core.mapping.Table;
 public class UserReviews {
 
     @Id
-    @Column("r_id")
+    @Column("u_id")
     private Long id;
 
     @Column("place_id")
     private Long placeId;
+
+    @Column("restaurant_name")
+    private String restaurantName;
 
     @Column("username")
     private String username;

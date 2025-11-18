@@ -3,6 +3,7 @@ package com.project.dine.right.services;
 import com.project.dine.right.dto.RestaurantPageAddReviewRequestDTO;
 import com.project.dine.right.jdbc.interfaces.IMyReviewsService;
 import com.project.dine.right.jdbc.models.MyReviews;
+import com.project.dine.right.jdbc.models.UserReviews;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,10 @@ public class RestaurantPageService {
     IMyReviewsService myReviewsService;
 
     public void saveReview(RestaurantPageAddReviewRequestDTO restaurantPageAddReviewRequestDTO) {
+
+        var userReview = new UserReviews();
+
+        userReview.setPlaceId(restaurantPageAddReviewRequestDTO.getRestaurantId());
 
         var myReview = new MyReviews();
 

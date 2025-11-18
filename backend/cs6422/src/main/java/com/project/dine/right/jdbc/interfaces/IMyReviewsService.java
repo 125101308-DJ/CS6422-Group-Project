@@ -10,4 +10,6 @@ public interface IMyReviewsService {
 
     MyReviews save(MyReviews myReviews);
 
+    Long countMyReviews();
+
 }

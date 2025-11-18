@@ -102,6 +102,20 @@ public class DashboardService implements IDashboardService {
     }
 
     @Override
+    public CountDetailsVO getCountDetails(Long userId) {
+
+        var countDetailsVO = new CountDetailsVO();
+
+        var user = userDataService.getUserDataById(userId);
+
+        countDetailsVO.setName(user.get().getName());
+        countDetailsVO.setCountOfWishlist(myWishlistService.countMyWishlists());
+        countDetailsVO.setCountOfReviewsWritten(myReviewsService.countMyReviews());
+
+        return countDetailsVO;
+    }
+
+    @Override
     public List<WishlistRestaurantVO> getWishlistRestaurants(Long userId) {
         var resultLst = new ArrayList<WishlistRestaurantVO>();
 
@@ -147,15 +161,13 @@ public class DashboardService implements IDashboardService {
         var restaurantsVO = new RestaurantsVO();
         restaurantsVO.setName(restaurant.getName());
         restaurantsVO.setPlaceId(restaurant.getPlaceId());
-        restaurantsVO.setLocation(restaurant.getAddress());
+        restaurantsVO.setAddress(restaurant.getAddress());
         restaurantsVO.setCuisine(restaurant.getCuisineType());
         restaurantsVO.setRestaurantType(restaurant.getRestaurantType());
         restaurantsVO.setPriceRange(restaurant.getPriceRange());
         restaurantsVO.setOverallRating(String.valueOf(restaurant.getRating()));
         restaurantsVO.setAmenities(restaurant.getAmenities());
         restaurantsVO.setAtmosphere(restaurant.getAtmosphere());
-        restaurantsVO.setDietaryOptions(restaurant.getDietaryOptions());
-        restaurantsVO.setServiceOptions(restaurant.getServiceOptions());
         restaurantsVO.setPhone(restaurant.getPhone());
 
         var restaurantReviews = userReviewsService.findAllByPlaceId(restaurant.getPlaceId());

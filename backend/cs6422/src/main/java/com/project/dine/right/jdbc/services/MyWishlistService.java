@@ -18,4 +18,9 @@ public class MyWishlistService implements IMyWishlistService {
     public List<MyWishlist> findByUserId(Long userId) {
         return myWishlistRepository.findByUserId(userId);
     }
+
+    @Override
+    public Long countMyWishlists() {
+        return myWishlistRepository.count();
+    }
 }

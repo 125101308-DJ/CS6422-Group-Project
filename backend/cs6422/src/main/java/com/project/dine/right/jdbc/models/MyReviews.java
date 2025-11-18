@@ -23,12 +23,15 @@ public class MyReviews {
     @Column("user_id")
     private Long userId;
 
+    @Column("user_review_id")
+    private Long userReviewId;
+
     @Column("rating")
     private Short rating;
 
     @Column("review_text")
     private String reviewText;
-    
+
     @Column("review_date")
     private String reviewDate;
 }

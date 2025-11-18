@@ -2,6 +2,7 @@ package com.project.dine.right.controller;
 
 import com.project.dine.right.dto.DashboardRestaurantsDataResponseDTO;
 import com.project.dine.right.dto.DashboardUserInfoResponseDTO;
+import com.project.dine.right.dto.DashboardUserMetricsResponseDTO;
 import com.project.dine.right.enums.CustomErrorCodes;
 import com.project.dine.right.interfaces.IDashboardService;
 import com.project.dine.right.utils.UserDataUtils;
@@ -73,5 +74,28 @@ public class DashboardController {
 
         responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
         return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @GetMapping("/getUserMetrics")
+    public ResponseEntity<DashboardUserMetricsResponseDTO> getUserMetrics(@RequestParam("userId") Long userId) {
+
+        var responseDTO = new DashboardUserMetricsResponseDTO();
+
+        if (ObjectUtils.isEmpty(userId)) {
+            responseDTO.setCode(CustomErrorCodes.MISSING_REQUIRED_PARAMETER.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        if (!userDataUtils.checkIfUserExists(userId)) {
+            responseDTO.setCode(CustomErrorCodes.USER_DOES_NOT_EXISTS.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        var countDetails = dashboardService.getCountDetails(userId);
+
+        responseDTO.setCountDetails(countDetails);
+        responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
+        return ResponseEntity.ok().body(responseDTO);
+
     }
 }

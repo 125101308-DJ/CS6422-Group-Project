@@ -23,13 +23,9 @@ public class RestaurantsVO {
 
     private String atmosphere;
 
-    private String dietaryOptions;
-
-    private String serviceOptions;
-
     private String amenities;
 
-    private String location;
+    private String address;
 
     private String cuisine;
 
