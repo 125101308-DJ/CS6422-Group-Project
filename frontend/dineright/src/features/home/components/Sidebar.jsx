@@ -1,25 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Sidebar.css";
 import { logout } from "../../auth/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({onToggle} ) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(true);
+  const userId = useSelector((state) => state.auth.user?.id);
 
   const handleLogout = () => {
     dispatch(logout());
     navigate("/login", { replace: true });
   };
+  const toggleSidebar = () => {
+    const newState = !isOpen;
+    setIsOpen(newState);
+    if (onToggle) onToggle(newState); // notify parent (HomePage/MyCorner)
+  };
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? "open" : "collapsed"}`}>
+      <button className="toggle-btn" onClick={toggleSidebar}>
+        {isOpen ? "←" : "☰"}
+      </button>
       <div className="sidebar-logo">🍽️ Dine Right</div>
 
       <nav className="sidebar-menu">
         <NavLink
-          to="/home"
+          to={`/home/${userId}`}
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           Overview

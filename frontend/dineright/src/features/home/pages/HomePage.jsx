@@ -1,7 +1,7 @@
 import {React,useState, useEffect} from "react";
 import Sidebar from "../components/Sidebar";
 import "./HomePage.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, NavLink } from "react-router-dom";
 import { fetchrestaurantsapi } from "../homeservice";
 
 
@@ -10,14 +10,14 @@ const fetchRestaurants = async () => {
   // simulate backend delay
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve([
+      resolve(
         {
-          "code":"SUCCESS",
-          "restaurants":[
-            { id: 1, name: "Blue Ocean Seafood", location: "Miami", cuisine: "Seafood", reviews: [ { user: "John", rating: 4.8, comment: "Amazing food!" }, ], }, { id: 2, name: "Spice Route", location: "New York", cuisine: "Indian", reviews: [ { user: "Anna", rating: 4.6, comment: "Loved the spices!" }, ], }, { id: 3, name: "Tokyo Sushi House", location: "San Francisco", cuisine: "Japanese", reviews: [ { user: "Mark", rating: 4.9, comment: "Best sushi in town!" }, ], }
+          code:"SUCCESS",
+          restaurants:[
+            { id: 1, name: "Blue Ocean Seafood", location: "Miami",price_range:"10-20",atmosphere:"Lively",amenities:"Live Music" ,phoneNumber:"326655624", rating: 4.5, cuisine: "Seafood", reviews: [ { user: "John", rating: 4.8, comment: "Amazing food!" }, ], }, { id: 2, name: "Spice Route", location: "New York",rating: 4, cuisine: "Indian", reviews: [ { user: "Anna", rating: 4.6, comment: "Loved the spices!" }, ], }, { id: 3, name: "Tokyo Sushi House", location: "San Francisco",rating: 4.7, cuisine: "Japanese", reviews: [ { user: "Mark", rating: 4.9, comment: "Best sushi in town!" }, ], }
           ]
         }
-      ]);
+      );
     }, 1000);
   });
 };
@@ -29,20 +29,28 @@ const HomePage = () => {
     const [restaurants, setRestaurants] = useState([]);
     const [filtered, setFiltered] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const { id } = useParams();
     const navigate = useNavigate();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const handleSidebarToggle = (open) => {
+    setIsSidebarOpen(open);
+  };
 
     useEffect(() => {
     const loadRestaurants = async () => {
       // 
       try {
-        const data = await fetchrestaurantsapi();
-        // const data = await fetchRestaurants();
+        // const data = await fetchrestaurantsapi();
+        const data = await fetchRestaurants();
+        
+        
         console.log("Restaurants API Response:", data);
-        if (data.code === "SUCCESS" && Array.isArray(data.restaurants)) {
-          setRestaurants(data.restaurants);
-          setFiltered(data.restaurants);
+        const list = data.restaurantData || data.restaurants || [];
+        if (data.code === "SUCCESS" && Array.isArray(list)) {
+          setRestaurants(list);
+          setFiltered(list);
         } else {
-          console.error("Failed to load restaurants:", data.code);
+          console.error("Failed to load restaurants:", data);
           alert("Could not load restaurants. Please try again later.");
         }
       } catch (error) {
@@ -67,9 +75,9 @@ const HomePage = () => {
     setFiltered(filteredResults);
   };
 
-    const handleRestaurantClick = (id) => {
+    const handleRestaurantClick = (restaurant) => {
     // redirect to restaurant detail page (we’ll create later)
-    navigate(`/restaurant/${id}`);
+    navigate(`/restaurant/${restaurant.id}`, {state:{restaurant}});
   };
 
 
@@ -79,9 +87,9 @@ const HomePage = () => {
 
   return (
     <div className="home-container">
-      <Sidebar />
+      <Sidebar onToggle={handleSidebarToggle} />
 
-      <main className="home-content">
+      <main className={`home-content ${isSidebarOpen ? "shifted" : "full"}`}>
         <header className="home-header">
           <div className="header-top">
             <h1>Welcome back, John!</h1>
@@ -102,7 +110,7 @@ const HomePage = () => {
                       <div
                         key={restaurant.id}
                         className="search-result-item"
-                        onClick={() => handleRestaurantClick(restaurant.id)}
+                        onClick={() => handleRestaurantClick(restaurant)}
                       >
                         <strong>{restaurant.name}</strong>
                         <p>{restaurant.cuisine} · {restaurant.location}</p>
@@ -119,18 +127,30 @@ const HomePage = () => {
         </header>
 
         <section className="stats-section">
-          <div className="stat-card">
-            <h3>Restaurants Visited</h3>
-            <p className="stat-number">47</p>
+          <div className="stat-card" >
+            <NavLink className={"navlink"}
+              to={"/restaurantvisitedpage"}>
+              <h3>Reviews Visited</h3>
+              <p className="stat-number">47</p>
+            </NavLink>
+
+            
           </div>
 
           <div className="stat-card">
-            <h3>Reviews Written</h3>
-            <p className="stat-number">31</p>
+            <NavLink className={"navlink"}
+              to={"/restaurantwrittenpage"}>
+              <h3>Reviews Written</h3>
+              <p className="stat-number">31</p>
+            </NavLink>
+            
           </div>
           <div className="stat-card">
-            <h3>Wishlist</h3>
-            <p className="stat-number">31</p>
+            <NavLink className={"navlink"}
+              to={"/mycorner"}>
+              <h3>Wishlist</h3>
+              <p className="stat-number">31</p>
+            </NavLink>
           </div>
         </section>
 

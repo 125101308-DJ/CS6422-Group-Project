@@ -1,8 +1,8 @@
 .mycorner-container {
   display: flex;
   min-height: 100vh;
-  background-color: #121212;
-  color: #fff;
+  background-color: #faf4f4;
+  color:#4b0b0b;
   font-family: "Inter", sans-serif;
 }
 
@@ -12,7 +12,20 @@
   margin-left: 260px;
   overflow-y: auto;
   width: calc(100% - 250px);
+  transition: margin-left 0.3s ease, width 0.3s ease;
+  padding: 40px;
 }
+
+.mycorner-content.shifted {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+}
+
+.mycorner-content.full {
+  margin-left: 60px;
+  width: calc(100% - 60px);
+}
+
 
 .mycorner-header h1 {
   font-size: 2rem;
@@ -20,16 +33,19 @@
 }
 
 .mycorner-header p {
-  color: #aaa;
+  color: black;
   margin-bottom: 30px;
 }
 
 /* === Activity Section === */
 .activity-section {
-  background-color: #1e1e1e;
+  background-color: #4b0b0b;
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 30px;
+}
+.activity-section h2 {
+  color: white;
 }
 
 .activity-list {
@@ -39,19 +55,22 @@
 }
 
 .activity-item {
-  background: #2a2a2a;
+  background: #ffdada;
   padding: 12px 15px;
   border-radius: 8px;
   margin-bottom: 10px;
-  color: #ccc;
+  color: #4b0b0b;
 }
 
 /* === Wishlist Section === */
 .wishlist-section {
-  background-color: #1e1e1e;
+  background-color: #4b0b0b;
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 30px;
+}
+.wishlist-section h2 {
+  color: white;
 }
 
 .wishlist-grid {
@@ -62,32 +81,36 @@
 }
 
 .wishlist-card {
-  background-color: #2a2a2a;
+  background-color: #ffdada;
   border-radius: 8px;
   padding: 15px;
   transition: background 0.2s ease;
 }
 
 .wishlist-card:hover {
-  background-color: #333;
+  background-color: white;
+  cursor: pointer;
 }
 
 .wishlist-card h4 {
   font-size: 1rem;
-  color: #fff;
+  color: #4b0b0b;
 }
 
 .wishlist-card p {
-  color: #aaa;
+  color: #4b0b0b;
   font-size: 0.85rem;
 }
 
 /* === Ranking Section === */
 .ranking-section {
-  background-color: #1e1e1e;
+  background-color: #4b0b0b;
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 40px;
+}
+.ranking-section h2{
+  color: white;
 }
 
 .ranking-subtitle {
@@ -105,7 +128,7 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  background: #2a2a2a;
+  background: #ffdada;
   padding: 12px 15px;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -113,12 +136,12 @@
 
 .rank-number {
   font-weight: bold;
-  color: #ff9800;
+  color: #4b0b0b;
   width: 20px;
   text-align: center;
 }
 
 .rank-name {
   flex: 1;
-  color: #fff;
+  color: #4b0b0b;
 }
