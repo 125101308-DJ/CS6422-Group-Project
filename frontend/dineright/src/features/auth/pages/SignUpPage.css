@@ -1,19 +1,43 @@
+
+/* ===== Global / Page ===== */
+:root{
+  --cream-bg: #faf4f4;      /* page background */
+  --card-bg: #ffffff;       /* card background */
+  --title-orange: #8a2b00;  /* very dark orange for "Dine Right" */
+  --accent-orange: #ff8c00; /* button hover/accents */
+  --text-black: #000000;
+  --muted: #6b6b6b;
+}
+
+
+
 .signup-container {
   height: 100vh;
   width: 100%;
-  background-color: #000;
+  background-color: #faf4f4;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .signup-box {
+  width: 100%;
+  max-width: 420px;
+  background: var(--card-bg);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(25,25,25,0.08);
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   text-align: center;
-  width: 350px;
+}
+.signup-box h1{
+  color: #924a4a;
 }
 
 .app-name {
-  color: orange;
+  color: #924a4a;
   font-size: 2.5rem;
   /* margin-bottom: 2rem; */
 
@@ -28,44 +52,46 @@
 }
 
 .signup-form input {
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  outline: none;
-  font-size: 1rem;
   width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #d8d8d8;
+  font-size: 1rem;
+  color: var(--text-black);
+  outline: none;
+  background: #fff;
+  transition: box-shadow 0.14s ease, border-color 0.14s ease;
 }
-.emaillabel{
-  display: flex;              /* Align elements horizontally */
-  align-items: center;
-  
-          /* Vertically center label and input */
-  
-}
-.passwordlabel{
-    display: flex;              /* Align elements horizontally */
-  align-items: center; 
-  
-}
-.namelabel{
-    display: flex;              /* Align elements horizontally */
-  align-items: center;
+.login-form label,
+.emaillabel,
+.namelabel,
+.passwordlabel {
+  display: block;
+  text-align: left;
+  color: var(--text-black);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0; /* controlled by parent gap */
 }
 
+
 .signup-form button {
-  background-color: orange;
-  color: white;
-  padding: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
   border: none;
-  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-  width: 106%;
+  background: linear-gradient(180deg, #924a4a, #4b0b0b);
+  color: #fff;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  margin-top: 4px;
 }
 
 .signup-form button:hover {
-  background-color: darkorange;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(230,118,0,0.14);
 }
 
 .login-text {
@@ -84,6 +110,11 @@
 }
 
 .signuplink{
-    color: darkorange;
+    color: #924a4a;
   text-decoration: none;
+  font-weight: 700;
+}
+.signuplink:hover{
+    color: #924a4a;
+  text-decoration: underline;
 }

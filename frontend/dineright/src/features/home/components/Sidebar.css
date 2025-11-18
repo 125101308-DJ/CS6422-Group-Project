@@ -1,75 +1,112 @@
-/* src/features/home/components/Sidebar.css */
-
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 250px;
   height: 100vh;
-  background-color: #000;
+  background-color: #4b0b0b;
+  color: white;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
   padding: 1.5rem;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.5);
+
+  /* Smooth slide animation */
+  width: 250px;
+  transition: width 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+/* Collapsed (hidden) state */
+.sidebar.collapsed {
+  width: 10px;
+  
+}
+
+/* Sidebar toggle button */
+.toggle-btn {
+  position: absolute;
+  top: 30px;
+  right: 2.5px;
+  width: 25px;
+  height: 25px;
+  opacity: 0px;
+  background-color: #ffdada;
+  color: #4b0b0b;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.3s ease, background 0.2s ease;
+}
+.sidebar.collapsed .toggle-btn {
+  right: 15px; /* button shifts left visually */
+}
+
+.toggle-btn:hover {
+  background-color: white;
+  transform: scale(1.1);
+}
+
+/* Adjust inner elements when collapsed */
+.sidebar.collapsed .sidebar-logo,
+.sidebar.collapsed .sidebar-footer,
+.sidebar.collapsed .sidebar-menu a {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .sidebar-logo {
-  color: #ff7b00;
+  color: #ffdada;
   font-size: 1.4rem;
   font-weight: bold;
   margin-bottom: 2rem;
+  transition: opacity 0.3s ease;
 }
 
 .sidebar-menu {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
+  transition: opacity 0.3s ease;
 }
 
 .sidebar-menu a {
-  color: #ccc;
+  color: #ffdada;
   text-decoration: none;
   font-size: 1rem;
-  padding: 0.5rem 0;
   transition: color 0.2s ease;
+  font-weight: 700
 }
 
 .sidebar-menu a:hover,
 .sidebar-menu a.active {
-  color: #ff7b00;
+  color: white;
 }
 
+.sidebar-menu a:hover{
+  transform: scale(1.1);
+}
 .sidebar-footer {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
+  margin-top: auto;
   border-top: 1px solid #222;
-  padding-top: 20rem;
-}
-
-.sidebar-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  padding-top: 1rem;
+  transition: opacity 0.3s ease;
 }
 
 .sidebar-name {
   font-weight: 600;
   color: #fff;
-  margin-bottom: 2px;
 }
 
 .sidebar-email {
-  color: #888;
+  color: white;
   font-size: 0.85rem;
 }
 
 .logout-btn {
   background: none;
   border: none;
-  color: #888;
-  margin-left: auto;
+  color: white;
   cursor: pointer;
   font-size: 0.9rem;
   transition: color 0.2s ease;

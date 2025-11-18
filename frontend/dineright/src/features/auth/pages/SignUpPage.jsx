@@ -5,7 +5,7 @@ import "./SignUpPage.css";
 import { loginStart, loginSuccess, loginFailure } from "../authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { signupapi } from "../authservice";
+import { signupapi,signuser } from "../authservice";
 
 
 const SignUpPage = () => {
@@ -18,12 +18,17 @@ const SignUpPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Sign up attempt:", formData);
     try {
-      const data = signupapi(formData.name, formData.email, formData.password);
+      const data = await signupapi(formData.name, formData.email, formData.password);
+      // const data = signuser(formData.name, formData.email, formData.password);
+
+      
       console.log("Signup API Response:", data);
+      console.log("API details",data.code);
+      
       if (data.code === "SUCCESS") {
       dispatch(loginSuccess({ id: data.id, email: formData.email, name: formData.name }));
       navigate("/preferences", { replace: true });

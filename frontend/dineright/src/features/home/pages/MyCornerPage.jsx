@@ -20,19 +20,19 @@ const MyCornerPage = () => {
     "Spice Route",
     "Blue Ocean Seafood",
     "Golden Curry",
-    "The Green Fork",
-    "Bella Italia",
-    "Grill Master",
-    "Ocean Breeze",
-    "Taco Fiesta",
-    "The Garden Plate",
+    "The Green Fork"
   ]);
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const handleSidebarToggle = (open) => {
+    setIsSidebarOpen(open);
+  };
+  console.log(isSidebarOpen);
+  
   return (
     <div className="mycorner-container">
-      <Sidebar />
+      <Sidebar onToggle={handleSidebarToggle} />
 
-      <main className="mycorner-content">
+      <main className={`mycorner-content ${isSidebarOpen ? "shifted" : "full"}`}>
         <header className="mycorner-header">
           <h1>My Corner</h1>
           <p>Your personal dining dashboard — all in one place.</p>
@@ -65,7 +65,7 @@ const MyCornerPage = () => {
 
         {/* Top 10 Rankings Section */}
         <section className="ranking-section">
-          <h2>Top 10 Restaurants</h2>
+          <h2>Top 5 Restaurants</h2>
           <p className="ranking-subtitle">Your current personal favorites</p>
           <ul className="ranking-list">
             {rankings.map((name, index) => (

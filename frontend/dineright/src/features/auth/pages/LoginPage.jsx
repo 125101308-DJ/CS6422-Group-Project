@@ -19,7 +19,7 @@ const LoginPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     console.log("Login attempt:", formData);
     if (formData.password.length < 6) {
@@ -28,15 +28,15 @@ const LoginPage = () => {
     }
     try {
       dispatch(loginStart());
-      const data = loginUser(formData.email, formData.password);
-      // const data = loginUserapi(formData.email, formData.password);
+      // const data = loginUser(formData.email, formData.password);
+      const data = await loginUserapi(formData.email,formData.password);
       console.log("API Response:", data);
 
 
 
       if (data.code === "SUCCESS") {
         dispatch(loginSuccess({ id: data.id, email: formData.email }));
-        navigate("/home", { replace: true });
+        navigate(`/home/${data.id}`, { replace: true });
       } 
       else if (data.code === "USER_ALREADY_EXISTS") {
       

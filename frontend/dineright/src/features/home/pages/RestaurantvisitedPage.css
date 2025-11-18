@@ -1,0 +1,90 @@
+.restaurantvisited-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #fafafa;
+  font-family: 'Inter', sans-serif;
+  
+}
+
+.restaurantvisited-main {
+  flex: 1;
+  padding: 2rem;
+  transition: margin-left 0.3s ease;
+  padding: 40px;
+  margin-left: 260px;
+  
+}
+
+.restaurantvisited-main.collapsed {
+  margin-left: 60px;
+  width: calc(100% - 60px);
+}
+
+.restaurantvisited-main.open {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  
+}
+
+.restaurantvisited-main h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.status-msg {
+  font-size: 1rem;
+  color: #555;
+}
+
+.status-msg.error {
+  color: #d9534f;
+}
+
+.visited-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.visited-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.visited-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.visited-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.visited-info {
+  padding: 1rem;
+}
+
+.visited-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+
+.visited-info p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.no-data {
+  text-align: center;
+  color: #777;
+  margin-top: 2rem;
+  font-size: 1.1rem;
+}

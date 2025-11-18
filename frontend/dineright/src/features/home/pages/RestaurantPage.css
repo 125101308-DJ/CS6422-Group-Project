@@ -1,0 +1,268 @@
+/* Main container */
+.restaurant-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #fafafa;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Content wrapper */
+.restaurant-content {
+  width: 100%;
+  max-width: 900px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+/* Header section */
+.restaurant-header {
+  position: relative;
+  width: 100%;
+}
+
+.restaurant-image {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+}
+
+
+.addreview{
+  margin-right: 0;
+}
+
+.restaurant-info {
+  padding: 1.5rem 2rem;
+}
+
+.restaurant-info h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+
+.restaurant-meta {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.restaurant-rating {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #ffb400;
+}
+
+/* Reviews Section */
+.reviews-section {
+  padding: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.reviews-section h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #222;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Each review */
+.review-card {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.review-user {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.review-rating {
+  color: #ffb400;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.review-comment {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Fallback message */
+.restaurant-container > div {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #555;
+  margin-top: 5rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .restaurant-content {
+    margin: 0 1rem;
+  }
+
+  .restaurant-image {
+    height: 250px;
+  }
+
+  .restaurant-info h1 {
+    font-size: 1.6rem;
+  }
+
+  .reviews-section {
+    padding: 1.5rem;
+  }
+}
+
+
+/* Add Review Button */
+.addreview {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.addreviewbtn {
+  background-color: orange;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.addreviewbtn:hover {
+  background-color: darkorange;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Box */
+.modal {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal h3 {
+  color: orange;
+  text-align: center;
+}
+
+.modal textarea {
+  width: 100%;
+  height: 100px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  resize: none;
+}
+
+/* Stars */
+.rating-stars {
+  display: flex;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin-left: 80px;
+}
+
+.star.selected {
+  background-color: black;
+}
+
+/* Modal Buttons */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.save-btn {
+  background-color: orange;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  border: none;
+  color: black;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.restaurant-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toggle-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.wish-btn, .visited-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+}
+
+.wish-btn {
+  background-color: #ff4d4d;
+}
+
+.wish-btn.active {
+  background-color: #d93636;
+}
+
+.visited-btn {
+  background-color: #3c9d3c;
+}
+
+.visited-btn.active {
+  background-color: #2e7a2e;
+}
