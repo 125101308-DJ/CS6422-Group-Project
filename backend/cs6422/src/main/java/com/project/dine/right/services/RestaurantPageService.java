@@ -30,7 +30,9 @@ public class RestaurantPageService {
 
     public void saveReview(RestaurantPageAddReviewRequestDTO restaurantPageAddReviewRequestDTO) {
 
-        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        var date = new Date();
+
+        var dateString = new SimpleDateFormat("yyyy-MM-dd").format(date);
 
         var userReview = new UserReviews();
 
@@ -39,7 +41,7 @@ public class RestaurantPageService {
         userReview.setUsername(userDataService.getUserDataById(restaurantPageAddReviewRequestDTO.getUserId()).get().getName());
         userReview.setReviewText(restaurantPageAddReviewRequestDTO.getComment());
         userReview.setRating(restaurantPageAddReviewRequestDTO.getUserRating().shortValue());
-        userReview.setReviewDate(date);
+        userReview.setReviewDate(dateString);
 
         userReviewsService.save(userReview);
 

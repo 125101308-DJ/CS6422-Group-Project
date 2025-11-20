@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.Date;
+
 @ToString
 @Getter
 @Setter
@@ -33,5 +35,5 @@ public class MyReviews {
     private String reviewText;
 
     @Column("review_date")
-    private String reviewDate;
+    private Date reviewDate;
 }
