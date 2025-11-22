@@ -18,21 +18,29 @@ const RestaurantPage = () => {
     const { id } = useParams();
     const uselocation = useLocation();
     const userId = useSelector((state) => state.auth.user?.id);
-    const [restaurant, setRestaurant] = useState(uselocation.state?.restaurant || null);    const [showModal, setShowModal] = useState(false);
-    const [userrating, setRating] = useState("");
+    const [restaurant, setRestaurant] = useState(null);    
+    const [showModal, setShowModal] = useState(false);
+    const [userRating, setRating] = useState("");
     const [comment, setComment] = useState("");
     const [loading, setLoading] = useState(false);
     const [isWishlisted, setIsWishlisted] = useState(false);
     const [isVisited, setIsVisited] = useState(false);
-    if (!restaurant) {
-    return <div>No restaurant data available. Please go back to home.</div>;
-  }
+    console.log("Restaurant ID:",id);
+    
+    
+    
     const loadrestaurantbyid = async()=> {
       try {
         const data = await getRestaurantById(id)
-        const list = data.restaurantData || data.restaurants || [];
-        if (data.code === "SUCCESS" && Array.isArray(list)) {
-          setRestaurant(list);
+        console.log("API by ID Data:", data);
+        
+        // const list = data.restaurants || [];
+        // console.log("restaurants:",list);
+        
+        if (data.code === "SUCCESS") {
+          setRestaurant(data.restaurants[0]);
+          console.log();
+          
           
         } else {
           console.error("Failed to load restaurants by ID API:", data);
@@ -44,15 +52,17 @@ const RestaurantPage = () => {
         
       }
     }
-     useEffect(() => {
+    useEffect(() => {
        loadrestaurantbyid()
        console.log("Loading restaurant Data");
        
      }, [])
-     
-    const {name, location,price_range,atmosphere,amenities ,phoneNumber, rating, cuisine, reviews =[]} = restaurant
+    
+    if (!restaurant) {
+  return <div>Loading restaurant...</div>;
+}
     const handleSaveReview = async () => {
-    if (!rating) {
+    if (!userRating) {
       alert("Please select a rating before saving.");
       return;
     }
@@ -60,13 +70,15 @@ const RestaurantPage = () => {
     const reviewData = {
       userId,
       restaurantId: id,
-      userrating,
+      userRating,
       comment,
     };
+    console.log("Review Data:",reviewData);
+    
 
     try {
       setLoading(true);
-      const res = addreviewapi();
+      const res = await addreviewapi(reviewData);
       console.log("Review saved:", res);
       setShowModal(false);
       setRating("");
@@ -113,6 +125,7 @@ const RestaurantPage = () => {
     }
   }
 };
+  
   return (
     <div className="restaurant-container">
       
@@ -120,11 +133,11 @@ const RestaurantPage = () => {
         <div className="restaurant-header">
           <img
             src="/assets/restaurantimg.jpg"
-            alt={name}
+            alt={restaurant.name}
             className="restaurant-image"
           />
           <div className="restaurant-info">
-            <h1>{name}</h1>
+            <h1>{restaurant.name}</h1>
             <div className="toggle-buttons">
               <button
                 className={`wish-btn ${isWishlisted ? "active" : ""}`}
@@ -140,7 +153,7 @@ const RestaurantPage = () => {
                 {isVisited ? "✔️ Visited" : "➕ Mark as Visited"}
               </button>
             </div>
-            <p className="restaurant-meta">{cuisine} · {location} · {price_range} · {atmosphere} · {amenities} · {phoneNumber} </p>
+            <p className="restaurant-meta">{restaurant.cuisine} · {restaurant.address} · {restaurant.priceRange} · {restaurant.atmosphere} · {restaurant.amenities} · {restaurant.phoneNumber} </p>
             <p className="restaurant-rating">
               {/* ⭐{rating} */}
               ⭐4.5
@@ -159,11 +172,11 @@ const RestaurantPage = () => {
 
         <section className="reviews-section">
           <h2>Customer Reviews</h2>
-          {reviews.length === 0 ? (
+          {restaurant.reviews.length === 0 ? (
             <p>No reviews yet.</p>
           ) : (
             <div className="reviews-list">
-              {reviews.map((r, i) => (
+              {restaurant.reviews.map((r, i) => (
                 <div key={i} className="review-card">
                   <p className="review-user">{r.user}</p>
                   <p className="review-rating">⭐ {r.rating}</p>
@@ -184,7 +197,7 @@ const RestaurantPage = () => {
               {[1, 2, 3, 4, 5].map((num) => (
                 <span
                   key={num}
-                  className={`star ${userrating >= num ? "selected" : ""}`}
+                  className={`star ${userRating >= num ? "selected" : ""}`}
                   onClick={() => setRating(num)}
                 >
                   ⭐

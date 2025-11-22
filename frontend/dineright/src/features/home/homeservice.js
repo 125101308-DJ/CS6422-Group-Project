@@ -17,7 +17,7 @@ export async function fetchrestaurantsapi() {
 
 export async function addreviewapi(reviewdata) {
     try {
-        const res = await axios.post(`${API_BASE_URL}/add`, reviewdata)
+        const res = await axios.post(`${API_BASE_URL}/addReview`, reviewdata)
         return res.data
         
     } catch (error) {
@@ -31,7 +31,7 @@ export async function addreviewapi(reviewdata) {
 
 export async function getRestaurantById(params) {
     try {
-        const response = axios.get(`${API_BASE_URL}/getRestaurantsDataById/${params}`)
+        const response = await axios.get(`${API_BASE_URL}/getRestaurantsDataById/${params}`)
         return response.data
     } catch (error) {
         console.error("Restaurant By ID API Failed:", error);
@@ -88,6 +88,17 @@ export async function getMockRestaurantVisitedById(params) {
 }
 
 
+
+export async function getRecommendationApi(params) {
+    try {
+        const response = axios.getget(`${API_BASE_URL}/getRecommendation/${params}`)
+        return response.data
+    } catch (error) {
+        console.error("Restaurant Visited By ID API Failed:", error);
+        return  {code: "FAIL", message: error.message }
+        
+    }
+}
 
 
 export async function addToWishListApi(userId, restaurantId) {
