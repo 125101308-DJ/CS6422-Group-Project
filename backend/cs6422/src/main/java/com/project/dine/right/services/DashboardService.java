@@ -1,9 +1,12 @@
 package com.project.dine.right.services;
 
+import com.project.dine.right.dto.AIModelRequestDTO;
 import com.project.dine.right.dto.vo.*;
 import com.project.dine.right.interfaces.IDashboardService;
 import com.project.dine.right.jdbc.interfaces.*;
+import com.project.dine.right.jdbc.models.MyWishlist;
 import com.project.dine.right.jdbc.models.RestaurantMetaData;
+import com.project.dine.right.utils.AIModelSubProcessUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -13,6 +16,9 @@ import java.util.List;
 
 @Service
 public class DashboardService implements IDashboardService {
+
+    @Autowired
+    private AIModelSubProcessUtils aiModelSubProcessUtils;
 
     @Autowired
     private IRestaurantDataService restaurantDataService;
@@ -31,6 +37,21 @@ public class DashboardService implements IDashboardService {
 
     @Autowired
     private ITopRestaurantsService topRestaurantsService;
+
+    @Autowired
+    private IUserPreferencesService userPreferencesService;
+
+    @Autowired
+    private IUserPreferredAmenitiesService userPreferredAmenitiesService;
+
+    @Autowired
+    private IPreferredAtmosphereService preferredAtmosphereService;
+
+    @Autowired
+    private IUserPreferredCuisinesService userPreferredCuisinesService;
+
+    @Autowired
+    private IUserPreferredRestaurantTypesService userPreferredRestaurantTypesService;
 
     @Override
     public List<RestaurantsVO> getRestaurants() {
@@ -155,6 +176,133 @@ public class DashboardService implements IDashboardService {
         }
 
         return resultLst;
+    }
+
+    @Override
+    public List<RecommendedRestaurantVO> getRecommendedRestaurants(Long userId) {
+
+        var resultLst = new ArrayList<RecommendedRestaurantVO>();
+        var modelRequest = new AIModelRequestDTO();
+
+        var userPreferences = userPreferencesService.findUserPreferencesByUserId(userId);
+
+        modelRequest.setRadiusKm(Long.valueOf(userPreferences.getRadius()));
+        modelRequest.setAddress(userPreferences.getPreferredLocation());
+        modelRequest.setBudgetFilter(userPreferences.getPreferredPriceRange());
+
+        var userPreferredAmenities = userPreferredAmenitiesService.findUserPreferredAmenitiesByUserId(userId);
+
+        if (userPreferredAmenities != null && !userPreferredAmenities.isEmpty()) {
+
+            var amenities = new ArrayList<String>();
+            for (var amenity : userPreferredAmenities) {
+                amenities.add(amenity.getPreferredAmenities());
+            }
+            modelRequest.setAmenitiesFilter(amenities);
+
+        }
+
+        var userPreferredCuisines = userPreferredCuisinesService.findUserPreferredCuisinesByUserId(userId);
+
+        if (userPreferredCuisines != null && !userPreferredCuisines.isEmpty()) {
+
+            var cuisines = new ArrayList<String>();
+            for (var cuisine : userPreferredCuisines) {
+                cuisines.add(cuisine.getPreferredCuisines());
+            }
+            modelRequest.setCuisineType(cuisines);
+
+        }
+
+        var userRestaurantTypes = userPreferredRestaurantTypesService.findUserPreferredRestaurantTypesByUserId(userId);
+
+        if (userRestaurantTypes != null && !userRestaurantTypes.isEmpty()) {
+
+            var restaurantTypes = new ArrayList<String>();
+            for (var restaurant : userRestaurantTypes) {
+                restaurantTypes.add(restaurant.getPreferredRestaurantType());
+            }
+            modelRequest.setRestaurantTypeFilter(restaurantTypes);
+
+        }
+
+        var userPreferredAtmosphere = preferredAtmosphereService.findPreferredAtmosphereByUserId(userId);
+
+        if (userPreferredAtmosphere != null && !userPreferredAtmosphere.isEmpty()) {
+
+            var preferredAtmosphere = new ArrayList<String>();
+            for (var atmosphere : userPreferredAtmosphere) {
+                preferredAtmosphere.add(atmosphere.getPreferredAtmosphere());
+            }
+            modelRequest.setAtmosphereFilter(preferredAtmosphere);
+
+        }
+
+        var recommendationsIdList = aiModelSubProcessUtils.getRecommendations(modelRequest);
+
+        for (var id : recommendationsIdList) {
+
+            var recommendedRestaurant = new RecommendedRestaurantVO();
+            var restaurant = restaurantDataService.findByRestaurantId(id);
+            recommendedRestaurant.setPlaceId(id);
+            recommendedRestaurant.setName(restaurant.getName());
+            recommendedRestaurant.setLocation(restaurant.getAddress());
+            recommendedRestaurant.setCuisine(restaurant.getCuisineType());
+            resultLst.add(recommendedRestaurant);
+
+        }
+
+        return resultLst;
+    }
+
+    @Override
+    public List<WishlistRestaurantVO> getUserWishlist(Long userId) {
+        var myWishlist = myWishlistService.findByUserId(userId);
+
+        var returnList = new ArrayList<WishlistRestaurantVO>();
+
+        for (var wishlist : myWishlist) {
+            var wishlistRestaurant = new WishlistRestaurantVO();
+            wishlistRestaurant.setRestaurantId(wishlist.getPlaceId());
+            wishlistRestaurant.setRestaurantName(restaurantDataService.findByRestaurantId(wishlist.getPlaceId()).getName());
+            returnList.add(wishlistRestaurant);
+        }
+
+        return returnList;
+    }
+
+    @Override
+    public List<MyUserReviewVO> getUserReviewsWritten(Long userId) {
+
+        var userReviews = myReviewsService.findAllByUserId(userId);
+
+        var returnList = new ArrayList<MyUserReviewVO>();
+
+        for (var userReview : userReviews) {
+            var myUserReviewVO = new MyUserReviewVO();
+            myUserReviewVO.setRestaurantId(String.valueOf(userReview.getPlaceId()));
+            myUserReviewVO.setRestaurantName(restaurantDataService.findByRestaurantId(userReview.getPlaceId()).getName());
+            myUserReviewVO.setComment(userReview.getReviewText());
+            returnList.add(myUserReviewVO);
+        }
+
+        return returnList;
+    }
+
+    @Override
+    public void addToUserWishlist(Long userId, Long restaurantId) {
+
+        var myWishlist = new MyWishlist();
+
+        myWishlist.setUserId(userId);
+        myWishlist.setPlaceId(restaurantId);
+
+        myWishlistService.save(myWishlist);
+    }
+
+    @Override
+    public void removeToUserWishlist(Long userId, Long restaurantId) {
+        myWishlistService.deleteByUserIdAndPlaceId(userId, restaurantId);
     }
 
     private RestaurantsVO getRestaurantsVO(RestaurantMetaData restaurant) {

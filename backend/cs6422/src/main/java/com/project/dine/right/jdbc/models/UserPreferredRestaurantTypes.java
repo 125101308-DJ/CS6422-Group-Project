@@ -20,6 +20,6 @@ public class UserPreferredRestaurantTypes {
     @Column("user_id")
     private Long userId;
 
-    @Column("preferred_restaurant_type")
+    @Column("preferred_restauranttype")
     private String preferredRestaurantType;
 }

@@ -6,8 +6,6 @@ import com.project.dine.right.jdbc.repositories.UserPreferencesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class UserPreferencesService implements IUserPreferencesService {
 
@@ -15,7 +13,7 @@ public class UserPreferencesService implements IUserPreferencesService {
     UserPreferencesRepository userPreferencesRepository;
 
     @Override
-    public List<UserPreferences> findUserPreferencesByUserId(Long userId) {
+    public UserPreferences findUserPreferencesByUserId(Long userId) {
         return userPreferencesRepository.findUserPreferencesByUserId(userId);
     }
 

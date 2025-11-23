@@ -6,11 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface UserPreferencesRepository extends CrudRepository<UserPreferences, Long> {
 
-    @Query("select * from public.user_preferences where user_id=:userId")
-    List<UserPreferences> findUserPreferencesByUserId(@Param("userId") Long userId);
+    @Query("select * from public.userpreferences where user_id=:userId")
+    UserPreferences findUserPreferencesByUserId(@Param("userId") Long userId);
 }

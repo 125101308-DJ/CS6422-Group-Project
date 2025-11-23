@@ -10,4 +10,7 @@ public interface IMyWishlistService {
 
     Long countMyWishlists();
 
+    MyWishlist save(MyWishlist myWishlist);
+
+    void deleteByUserIdAndPlaceId(Long userId, Long restaurantId);
 }

@@ -18,4 +18,13 @@ public interface IDashboardService {
 
     List<TopKRestaurantVO> getTopKRestaurants(Long userId);
 
+    List<RecommendedRestaurantVO> getRecommendedRestaurants(Long userId);
+
+    List<WishlistRestaurantVO> getUserWishlist(Long userId);
+
+    List<MyUserReviewVO> getUserReviewsWritten(Long userId);
+
+    void addToUserWishlist(Long userId, Long restaurantId);
+
+    void removeToUserWishlist(Long userId, Long restaurantId);
 }

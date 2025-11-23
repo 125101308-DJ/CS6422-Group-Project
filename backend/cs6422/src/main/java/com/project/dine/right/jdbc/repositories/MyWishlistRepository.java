@@ -14,4 +14,7 @@ public interface MyWishlistRepository extends CrudRepository<MyWishlist, Long> {
     @Query("select * from public.my_wishlist where user_id=:userId")
     List<MyWishlist> findByUserId(@Param("userId") Long userId);
 
+    @Query("delete from public.my_wishlist where user_id=:userId and place_id=:restaurantId")
+    void deleteByUserIdAndPlaceId(@Param("userId") Long userId, @Param("restaurantId") Long restaurantId);
+
 }

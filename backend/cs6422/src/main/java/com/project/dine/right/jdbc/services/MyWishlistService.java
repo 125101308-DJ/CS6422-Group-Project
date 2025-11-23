@@ -23,4 +23,14 @@ public class MyWishlistService implements IMyWishlistService {
     public Long countMyWishlists() {
         return myWishlistRepository.count();
     }
+
+    @Override
+    public MyWishlist save(MyWishlist myWishlist) {
+        return myWishlistRepository.save(myWishlist);
+    }
+
+    @Override
+    public void deleteByUserIdAndPlaceId(Long userId, Long restaurantId) {
+        myWishlistRepository.deleteByUserIdAndPlaceId(userId, restaurantId);
+    }
 }

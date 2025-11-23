@@ -24,22 +24,22 @@ public class OnboardingService implements IOnboardingService {
 
     private static String secret;
     private static String iv;
-    @Autowired
-    IUserDataService userDataService;
-    @Autowired
-    IUserPreferencesService userPreferencesService;
-    @Autowired
-    IUserPreferredCuisinesService userPreferredCuisinesService;
-    @Autowired
-    IUserPreferredAmenitiesService userPreferredAmenitiesService;
-    @Autowired
-    IPreferredAtmosphereService preferredAtmosphereService;
-    @Autowired
-    IUserPreferredRestaurantTypesService userPreferredRestaurantTypesService;
     @Value("${dine.right.secret}")
     private String keyString;
     @Value("${dine.right.iv}")
     private String ivKey;
+    @Autowired
+    private IUserDataService userDataService;
+    @Autowired
+    private IUserPreferencesService userPreferencesService;
+    @Autowired
+    private IUserPreferredCuisinesService userPreferredCuisinesService;
+    @Autowired
+    private IUserPreferredAmenitiesService userPreferredAmenitiesService;
+    @Autowired
+    private IPreferredAtmosphereService preferredAtmosphereService;
+    @Autowired
+    private IUserPreferredRestaurantTypesService userPreferredRestaurantTypesService;
 
     private static String getEncryptedString(String password) throws Exception {
         //Initializing AES-256 cipher and encrypting password
