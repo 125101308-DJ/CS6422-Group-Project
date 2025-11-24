@@ -10,9 +10,6 @@ import com.project.dine.right.jdbc.models.UserReviews;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 @Service
 public class RestaurantPageService {
 
@@ -30,10 +27,6 @@ public class RestaurantPageService {
 
     public void saveReview(RestaurantPageAddReviewRequestDTO restaurantPageAddReviewRequestDTO) {
 
-        var date = new Date();
-
-        var dateString = new SimpleDateFormat("yyyy-MM-dd").format(date);
-
         var userReview = new UserReviews();
 
         userReview.setPlaceId(restaurantPageAddReviewRequestDTO.getRestaurantId());
@@ -41,7 +34,6 @@ public class RestaurantPageService {
         userReview.setUsername(userDataService.getUserDataById(restaurantPageAddReviewRequestDTO.getUserId()).get().getName());
         userReview.setReviewText(restaurantPageAddReviewRequestDTO.getComment());
         userReview.setRating(restaurantPageAddReviewRequestDTO.getUserRating().shortValue());
-        userReview.setReviewDate(dateString);
 
         userReviewsService.save(userReview);
 
@@ -51,7 +43,6 @@ public class RestaurantPageService {
         myReview.setPlaceId(restaurantPageAddReviewRequestDTO.getRestaurantId());
         myReview.setRating(restaurantPageAddReviewRequestDTO.getUserRating().shortValue());
         myReview.setReviewText(restaurantPageAddReviewRequestDTO.getComment());
-        myReview.setReviewDate(date);
 
         myReviewsService.save(myReview);
     }

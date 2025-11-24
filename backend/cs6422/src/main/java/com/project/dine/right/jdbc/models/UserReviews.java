@@ -29,9 +29,6 @@ public class UserReviews {
     @Column("user_review_id")
     private Long userReviewsId;
 
-    @Column("review_date")
-    private String reviewDate;
-
     @Column("rating")
     private Short rating;
 
