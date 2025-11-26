@@ -239,16 +239,18 @@ public class DashboardService implements IDashboardService {
 
         var recommendationsIdList = aiModelSubProcessUtils.getRecommendations(modelRequest);
 
-        for (var id : recommendationsIdList) {
+        if (recommendationsIdList != null) {
+            for (var id : recommendationsIdList) {
 
-            var recommendedRestaurant = new RecommendedRestaurantVO();
-            var restaurant = restaurantDataService.findByRestaurantId(id);
-            recommendedRestaurant.setPlaceId(id);
-            recommendedRestaurant.setName(restaurant.getName());
-            recommendedRestaurant.setLocation(restaurant.getAddress());
-            recommendedRestaurant.setCuisine(restaurant.getCuisineType());
-            resultLst.add(recommendedRestaurant);
+                var recommendedRestaurant = new RecommendedRestaurantVO();
+                var restaurant = restaurantDataService.findByRestaurantId(id);
+                recommendedRestaurant.setPlaceId(id);
+                recommendedRestaurant.setName(restaurant.getName());
+                recommendedRestaurant.setLocation(restaurant.getAddress());
+                recommendedRestaurant.setCuisine(restaurant.getCuisineType());
+                resultLst.add(recommendedRestaurant);
 
+            }
         }
 
         return resultLst;

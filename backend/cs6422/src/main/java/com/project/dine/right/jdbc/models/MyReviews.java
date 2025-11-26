@@ -23,9 +23,6 @@ public class MyReviews {
     @Column("user_id")
     private Long userId;
 
-    @Column("user_review_id")
-    private Long userReviewId;
-
     @Column("rating")
     private Short rating;
 
