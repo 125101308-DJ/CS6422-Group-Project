@@ -109,7 +109,6 @@ public class DashboardService implements IDashboardService {
                             n.setRestaurantName(restaurant.getName());
                             n.setComment(o.getReviewText());
                             n.setRating(Integer.valueOf(o.getRating()));
-                            n.setDate(String.valueOf(o.getReviewDate()));
                             return n;
                         }).toList());
             } else {
