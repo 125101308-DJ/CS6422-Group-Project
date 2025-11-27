@@ -27,4 +27,10 @@ public interface IDashboardService {
     void addToUserWishlist(Long userId, Long restaurantId);
 
     void removeToUserWishlist(Long userId, Long restaurantId);
+
+    void addToVisited(Long userId, Long restaurantId);
+
+    void removeVisited(Long userId, Long restaurantId);
+
+    List<WishlistRestaurantVO> getUserVisited(Long userId);
 }

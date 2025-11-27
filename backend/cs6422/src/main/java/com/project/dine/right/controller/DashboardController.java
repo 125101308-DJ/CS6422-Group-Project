@@ -174,6 +174,35 @@ public class DashboardController {
         return ResponseEntity.ok().body(responseDTO);
     }
 
+    @PostMapping("/getUserRestaurantsVisited")
+    public ResponseEntity<DashboardGetUserVisitedResponseDTO> getUserRestaurantsVisited(@RequestBody(required = false) DashboardGenericGetByUserIdRequestDTO requestDTO) {
+
+        var responseDTO = new DashboardGetUserVisitedResponseDTO();
+
+        if (ObjectUtils.isEmpty(requestDTO)) {
+            responseDTO.setCode(CustomErrorCodes.EMPTY_JSON.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        var userId = requestDTO.getUserId();
+
+        if (ObjectUtils.isEmpty(userId)) {
+            responseDTO.setCode(CustomErrorCodes.MISSING_REQUIRED_PARAMETER.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        if (!userDataUtils.checkIfUserExists(userId)) {
+            responseDTO.setCode(CustomErrorCodes.USER_DOES_NOT_EXISTS.name());
+            return ResponseEntity.ok().body(responseDTO);
+        }
+
+        var visited = dashboardService.getUserVisited(userId);
+
+        responseDTO.setRestaurantsVisited(visited);
+        responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
     @PostMapping("/addWishlistRestaurant")
     public ResponseEntity<GenericCodeOnlyResponseDTO> addWishlistRestaurant(@RequestBody(required = false) DashboardGenericUserIdAndRestaurantIdRequestDTO requestDTO) {
 
@@ -227,6 +256,64 @@ public class DashboardController {
         }
 
         dashboardService.removeToUserWishlist(userId, restaurantId);
+
+        responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @PostMapping("/addVisitedRestaurant")
+    public ResponseEntity<GenericCodeOnlyResponseDTO> addVisitedRestaurant(@RequestBody(required = false) DashboardGenericUserIdAndRestaurantIdRequestDTO requestDTO) {
+
+        var responseDTO = new GenericCodeOnlyResponseDTO();
+
+        if (ObjectUtils.isEmpty(requestDTO)) {
+            responseDTO.setCode(CustomErrorCodes.EMPTY_JSON.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        var userId = requestDTO.getUserId();
+        var restaurantId = requestDTO.getRestaurantId();
+
+        if (ObjectUtils.isEmpty(userId) || ObjectUtils.isEmpty(restaurantId)) {
+            responseDTO.setCode(CustomErrorCodes.MISSING_REQUIRED_PARAMETER.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        if (!userDataUtils.checkIfUserExists(userId)) {
+            responseDTO.setCode(CustomErrorCodes.USER_DOES_NOT_EXISTS.name());
+            return ResponseEntity.ok().body(responseDTO);
+        }
+
+        dashboardService.addToVisited(userId, restaurantId);
+
+        responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @DeleteMapping("/removeVisitedRestaurant")
+    public ResponseEntity<GenericCodeOnlyResponseDTO> removeVisitedRestaurant(@RequestBody(required = false) DashboardGenericUserIdAndRestaurantIdRequestDTO requestDTO) {
+
+        var responseDTO = new GenericCodeOnlyResponseDTO();
+
+        if (ObjectUtils.isEmpty(requestDTO)) {
+            responseDTO.setCode(CustomErrorCodes.EMPTY_JSON.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        var userId = requestDTO.getUserId();
+        var restaurantId = requestDTO.getRestaurantId();
+
+        if (ObjectUtils.isEmpty(userId) || ObjectUtils.isEmpty(restaurantId)) {
+            responseDTO.setCode(CustomErrorCodes.MISSING_REQUIRED_PARAMETER.name());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+        if (!userDataUtils.checkIfUserExists(userId)) {
+            responseDTO.setCode(CustomErrorCodes.USER_DOES_NOT_EXISTS.name());
+            return ResponseEntity.ok().body(responseDTO);
+        }
+
+        dashboardService.removeVisited(userId, restaurantId);
 
         responseDTO.setCode(CustomErrorCodes.SUCCESS.name());
         return ResponseEntity.ok().body(responseDTO);

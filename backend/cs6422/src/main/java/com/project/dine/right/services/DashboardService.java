@@ -6,6 +6,7 @@ import com.project.dine.right.interfaces.IDashboardService;
 import com.project.dine.right.jdbc.interfaces.*;
 import com.project.dine.right.jdbc.models.MyWishlist;
 import com.project.dine.right.jdbc.models.RestaurantMetaData;
+import com.project.dine.right.jdbc.models.RestaurantsVisited;
 import com.project.dine.right.utils.AIModelSubProcessUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,9 @@ public class DashboardService implements IDashboardService {
 
     @Autowired
     private IUserPreferredRestaurantTypesService userPreferredRestaurantTypesService;
+
+    @Autowired
+    private IRestaurantsVisitedService restaurantsVisitedService;
 
     @Override
     public List<RestaurantsVO> getRestaurants() {
@@ -131,6 +135,7 @@ public class DashboardService implements IDashboardService {
         countDetailsVO.setName(user.get().getName());
         countDetailsVO.setCountOfWishlist(myWishlistService.countMyWishlists());
         countDetailsVO.setCountOfReviewsWritten(myReviewsService.countMyReviews());
+        countDetailsVO.setCountOfRestaurantsVisited(restaurantsVisitedService.countMyVisited());
 
         return countDetailsVO;
     }
@@ -304,6 +309,39 @@ public class DashboardService implements IDashboardService {
     @Override
     public void removeToUserWishlist(Long userId, Long restaurantId) {
         myWishlistService.deleteByUserIdAndPlaceId(userId, restaurantId);
+    }
+
+    @Override
+    public void addToVisited(Long userId, Long restaurantId) {
+
+        var restaurantVisited = new RestaurantsVisited();
+
+        restaurantVisited.setUserId(userId);
+        restaurantVisited.setPlaceId(restaurantId);
+
+        restaurantsVisitedService.save(restaurantVisited);
+    }
+
+    @Override
+    public void removeVisited(Long userId, Long restaurantId) {
+        restaurantsVisitedService.deleteByUserIdAndPlaceId(userId, restaurantId);
+    }
+
+    @Override
+    public List<WishlistRestaurantVO> getUserVisited(Long userId) {
+        var restaurantsVisited = restaurantsVisitedService.findByUserId(userId);
+
+        var returnList = new ArrayList<WishlistRestaurantVO>();
+
+        for (var restaurant : restaurantsVisited) {
+            var restaurantVO = new WishlistRestaurantVO();
+            restaurantVO.setRestaurantId(restaurant.getPlaceId());
+            restaurantVO.setRestaurantName(restaurantDataService.findByRestaurantId(restaurant.getPlaceId()).getName());
+            restaurantVO.setLocation(restaurantDataService.findByRestaurantId(restaurant.getPlaceId()).getAddress());
+            returnList.add(restaurantVO);
+        }
+
+        return returnList;
     }
 
     private RestaurantsVO getRestaurantsVO(RestaurantMetaData restaurant) {
